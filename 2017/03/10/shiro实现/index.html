@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Archives: 2017/3 | Hexo</title>
+<title>shiro实现 | Hexo</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -122,27 +122,110 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div id="main">
-  <div id="post-list">
-    <ul class="archives-post-list">
-    	<h1 class="info">2017年 3月</h1>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="shiro实现">
+            
+	            shiro实现
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/shiro实现" title='shiro实现'>
+                        shiro实现
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
         
-          <li class="post-items" _href="/2017/03/10/shiro实现/">
-            <h3 class="post-item-title">
-            	<a href="/2017/03/10/shiro实现/"> shiro实现 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2017/03/03/shiro/">
-            <h3 class="post-item-title">
-            	<a href="/2017/03/03/shiro/"> shiro的工作原理 </a>
-            </h3>  
-          </li>
-        
-    </ul>
-  </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/03/10</span>
+        </span>
+    
 </div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>389</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="shiro实现分为以下几个步骤"><a href="#shiro实现分为以下几个步骤" class="headerlink" title="shiro实现分为以下几个步骤"></a>shiro实现分为以下几个步骤</h1><blockquote>
+<p>表设计<br>导包<br>代码实现</p>
+</blockquote>
+<h2 id="1-表设计"><a href="#1-表设计" class="headerlink" title="1.表设计"></a>1.表设计</h2><p><img src="table.png" alt="表设计"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">表设计这块一共有六张表</span><br><span class="line">模块表：功能模块</span><br><span class="line">角色表：角色信息</span><br><span class="line">用户表：用户信息</span><br><span class="line">角色用户关联表：用户和角色的关联表</span><br><span class="line">角色模块关联表：角色和模块的关联表</span><br><span class="line">实际主要用的是用户表、角色表、模块表，由于用户表和角色表是多对多的关系，所以需要</span><br><span class="line">一张之间表关联，角色表和模块表也是多对多的关系，所以也需要关联起来</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-导包"><a href="#2-导包" class="headerlink" title="2.导包"></a>2.导包</h2><p><strong>只需要导入如下包即可</strong><br><img src="importb.png" alt="导包"></p>
+<h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h2><ul>
+<li>添加拦截器<br><img src="shirosx1.png" alt="拦截器"></li>
+<li>设置shiro使用cglib代理（不设置使用的是jdk动态代理,配置这个在授权的时候，底层用到的是代理模式）<br><img src="shirosx2.png" alt="cglib"></li>
+<li>设置安全管理器，拦截那些请求<br><img src="shirosx3.png" alt="安全管理器"><pre><code>上面这些代码，里面包含了自定义的realm，和自定义的加密器，加密器在用户登录的时候，对用户的密码加密之后跟数据库里面的数据进行比对（用户在注册时，密码都是加密之后，存储到数据库里面的），自定义的realm，里面包含了两个方法，一个是用户认证的好方法，另外一个是用户授权的方法，主要业务逻辑我们自己实现
+</code></pre></li>
+<li>加密器<br><img src="shirosx4.png" alt="加密器"></li>
+<li>Realm<br><img src="shirosx5.png" alt="Realm"><br><img src="shirosx6.png" alt="Realm"><pre><code>Realm里面授权最后查询返回的list是，关联6张表查出来的用户拥有的模块
+</code></pre></li>
+<li>授权用法<br><img src="shirosx7.png" alt="用法"><br><img src="shirosx8.png" alt="用法"><br>#####也可以使用注解的方式<br><img src="shirosx9.png" alt="用法"></li>
+<li>登录用法<br><img src="shirosx10.png" alt="用法"></li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2018/04/02/你好，HEXO“/" class="pre-post btn btn-default" title='你好，HEXO “ '>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">你好，HEXO “ </span>
+        </a>
+    
+    
+        <a href="/2017/03/03/shiro/" class="next-post btn btn-default" title='shiro的工作原理'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">shiro的工作原理</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
 
 
 
