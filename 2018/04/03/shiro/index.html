@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Archives | Hexo</title>
+<title>Hexo</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -122,33 +122,89 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div id="main">
-  <div id="post-list">
-    <ul class="archives-post-list">
-    	<h1 class="info">年 月</h1>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="">
+            
+	            NO Title!
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+            
+        </span>
+    </span>
+    
+
+    
         
-          <li class="post-items" _href="/2018/04/03/shiro/">
-            <h3 class="post-item-title">
-            	<a href="/2018/04/03/shiro/">  </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2018/04/02/你好，HEXO“/">
-            <h3 class="post-item-title">
-            	<a href="/2018/04/02/你好，HEXO“/"> 你好，HEXO “  </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2018/04/02/hello-world/">
-            <h3 class="post-item-title">
-            	<a href="/2018/04/02/hello-world/"> Hello World </a>
-            </h3>  
-          </li>
-        
-    </ul>
-  </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2018/04/03</span>
+        </span>
+    
 </div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>#shiro的工作原理</p>
+<p>##什么是shiro</p>
+<hr>
+<p>hiro是apache的一个开源框架，是一个权限管理的框架，实现 用户认证、用户授权。<br>spring中有spring security (原名Acegi)，是一个权限框架，它和spring依赖过于紧密，没有shiro使用简单。<br>shiro不依赖于spring，shiro不仅可以实现 web应用的权限管理，还可以实现c/s系统，分布式系统权限管理，shiro属于轻量框架，越来越多企业项目开始使用shiro。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用shiro实现系统的权限管理，有效提高开发效率，从而降低开发成本。</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>##shiro架构<br><img src="shiro/shirojg.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">subject：主体，可以是用户也可以是程序，主体要访问系统，系统需要对主体进行认证、授权。</span><br><span class="line"></span><br><span class="line">securityManager：安全管理器，主体进行认证和授权都是通过securityManager进行。</span><br><span class="line"></span><br><span class="line">authenticator：认证器，主体进行认证最终通过authenticator进行的。</span><br><span class="line"></span><br><span class="line">authorizer：授权器，主体进行授权最终通过authorizer进行的。</span><br><span class="line"></span><br><span class="line">sessionManager：web应用中一般是用web容器对session进行管理，shiro也提供一套session管理的方式。</span><br><span class="line"></span><br><span class="line">SessionDao：  通过SessionDao管理session数据，针对个性化的session数据存储需要使用sessionDao。</span><br><span class="line"></span><br><span class="line">cache Manager：缓存管理器，主要对session和授权数据进行缓存，比如将授权数据通过cacheManager进行缓存管理，和ehcache整合对缓存数据进行管理。</span><br><span class="line">realm：域，领域，相当于数据源，通过realm存取认证、授权相关数据。</span><br><span class="line"></span><br><span class="line">*注意：在realm中存储授权和认证的逻辑。*</span><br><span class="line">cryptography：密码管理，提供了一套加密/解密的组件，方便开发。比如提供常用的散列、加/解密等功能。</span><br><span class="line">比如 md5散列算法。</span><br></pre></td></tr></table></figure></p>
+<p>##认证过程<br><img src="shiro/shirorz.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">认证执行流程</span><br><span class="line">1、通过ini配置文件创建securityManager</span><br><span class="line">2、调用subject.login方法主体提交认证，提交的token</span><br><span class="line">3、securityManager进行认证，securityManager最终由ModularRealmAuthenticator进行认证。</span><br><span class="line">4、ModularRealmAuthenticator调用IniRealm(给realm传入token) 去ini配置文件中查询用户信息</span><br><span class="line">5、IniRealm根据输入的token（UsernamePasswordToken）从 shiro.ini查询用户信息，根据账号查询用户信息（账号和密码）</span><br><span class="line">  如果查询到用户信息，就给ModularRealmAuthenticator返回用户信息（账号和密码）</span><br><span class="line">         如果查询不到，就给ModularRealmAuthenticator返回null</span><br><span class="line">6、ModularRealmAuthenticator接收IniRealm返回Authentication认证信息</span><br><span class="line"> 如果返回的认证信息是null，ModularRealmAuthenticator抛出异常（org.apache.shiro.authc.UnknownAccountException）</span><br><span class="line"> 如果返回的认证信息不是null（说明inirealm找到了用户），对IniRealm返回用户密码 （在ini文件中存在）</span><br><span class="line"> 和 token中的密码 进行对比，如果不一致抛出异常（org.apache.shiro.authc.IncorrectCredentialsException）</span><br></pre></td></tr></table></figure></p>
+<p>##授权流程<br><img src="shiro/shirosq.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、对subject进行授权，调用方法isPermitted（<span class="string">"permission串"</span>）</span><br><span class="line">2、SecurityManager执行授权，通过ModularRealmAuthorizer执行授权</span><br><span class="line">3、ModularRealmAuthorizer执行realm（自定义的Realm）从数据库查询权限数据调用realm的授权方法：doGetAuthorizationInfo</span><br><span class="line">4、realm从数据库查询权限数据，返回ModularRealmAuthorizer</span><br><span class="line">5、ModularRealmAuthorizer调用PermissionResolver进行权限串比对</span><br><span class="line">6、如果比对后，isPermitted中<span class="string">"permission串"</span>在realm查询到权限数据中，说明用户访问permission串有权限，否则 没有权限，抛出异常。</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2018/04/02/你好，HEXO“/" class="next-post btn btn-default" title='你好，HEXO “ '>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">你好，HEXO “ </span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
 
 
 
