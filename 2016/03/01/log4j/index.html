@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Tag: shiro实现 | Hexo</title>
+<title>log4j日志存储到本地 | Hexo</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -122,46 +122,147 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <h3> 
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="log4j日志存储到本地">
+            
+	            log4j日志存储到本地
+            
+        </h1>
+        <div class="post-meta">
     
-        shiro实现 
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
     
     
-</h3>
-
-    <article class="post">
-        
-            <div class="post-media">
-                <a href="/2017/03/10/shiro实现/">
-                    <img class="img-ajax" src="/img/loading.gif"  data-src="thumbnail/shiro1.jpg"  alt="shiro实现"> 
-                </a>
-            </div>
-        
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title"> 
-                    <a href="/2017/03/10/shiro实现/">shiro实现</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2017年03月10日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
                 
-                    shiro实现分为以下几个步骤
-表设计导包代码实现
-
-1.表设计12345678表设计这块一共有六张表模块表：功能模块角色表：角色信息用户表：用户信息角色用户关联表：用户和角色的关联表角色模块关联表：角色和模块的关联表实际主要用的是用...
+                    <a href="/tags/log4j" title='log4j'>
+                        log4j
+                    </a>
                 
-            </p> 
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/03/01</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>763</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Log4j日志信息保存到本地文件"><a href="#Log4j日志信息保存到本地文件" class="headerlink" title="Log4j日志信息保存到本地文件"></a>Log4j日志信息保存到本地文件</h1><p>以DailyRollingFileAppender 为例：假设每天一个日志文件<br>     有以下设置：</p>
+<pre><code>log4j.appender.A1=org.apache.log4j.DailyRollingFileAppender 
+log4j.appender.A1.File=app.log
+log4j.appender.A1.DatePattern=&apos;.&apos;yyyy-MM-dd
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d %5p - %c -%-4r [%t]    - %m%n
+
+此时生成日志文件将位于tomcat的bin目录下，如要将日志文件保存在 ：根目录/web-info/logs/下，个人有以下4种解决方案：
+</code></pre><h2 id="1-绝对路径"><a href="#1-绝对路径" class="headerlink" title="1 绝对路径"></a>1 绝对路径</h2><pre><code> log4j.appender.A1.File=D:\apache-tomcat-6.0.18/webapps/项目/WEB-INF/logs/app.log
+ 但这种写法灵活性很差
+
+ 以下3中使用相同的设置原理： jvm的环境变量
+  2：spring的Log4jConfigListener
+ 通过以下配置：
+&lt; context-param&gt;
+     &lt;param-name&gt;webAppRootKey&lt;/param-name&gt;
+     &lt;param-value&gt;webApp.root&lt;/param-value&gt;
+   &lt;/context-param&gt;
+  &lt;context-param&gt;
+   &lt;param-name&gt;log4jConfigLocation&lt;/param-name&gt;
+     &lt;param-value&gt;classpath:log4j.properties&lt;/param-value&gt;
+  &lt;/context-param&gt;
+&lt; listener&gt;  
+      &lt;listener-class&gt;org.springframework.web.util.Log4jConfigListener&lt;/listener-class&gt;  
+  &lt;/listener&gt;
+ ...
+ log4j.appender.logfile.File=${webApp.root}/WEB-INF/logs/app.log
+ ...
+ 来解决
+</code></pre><h2 id="2-使用已有jvm变量："><a href="#2-使用已有jvm变量：" class="headerlink" title="2:使用已有jvm变量："></a>2:使用已有jvm变量：</h2><pre><code>例如：
+    log4j.appender.logfile.File=${user.home}/logs/app.log
+  日志将位于：例如windows：C:\Documents and Settings\joe\logs\app.log
+</code></pre><h2 id="3-自己设置目录，也就是在项目启动时通过System-setProperty设置"><a href="#3-自己设置目录，也就是在项目启动时通过System-setProperty设置" class="headerlink" title="3 自己设置目录，也就是在项目启动时通过System.setProperty设置"></a>3 自己设置目录，也就是在项目启动时通过System.setProperty设置</h2><pre><code>通过实现ServletContextListener来解决：例如
+public class log4jlistener implements ServletContextListener {
+ public static final String log4jdirkey = &quot;log4jdir&quot;;
+  public void contextDestroyed(ServletContextEvent servletcontextevent) {
+   System.getProperties().remove(log4jdirkey);
+ }
+ public void contextInitialized(ServletContextEvent servletcontextevent) {
+   String log4jdir = servletcontextevent.getServletContext().getRealPath(&quot;/&quot;);
+   //System.out.println(&quot;log4jdir:&quot;+log4jdir);
+   System.setProperty(log4jdirkey, log4jdir);
+ }
+}
+ web.xml配置：
+
+&lt;listener&gt;
+   &lt;listener-class&gt;com.log4j.log4jlistener&lt;/listener-class&gt;
+  &lt;/listener&gt;
+
+ log4j.prtperties 配置：
+ log4j.appender.A1.File=${log4jdir}/WEB-INF/logs/app1.log
+ 来解决。
+</code></pre>
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
         </div>
-    </article>
- 
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/03/03/shiro/" class="pre-post btn btn-default" title='shiro的工作原理'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">shiro的工作原理</span>
+        </a>
+    
+    
+        <a href="/2016/02/10/ssm/" class="next-post btn btn-default" title='SSM框架整合'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">SSM框架整合</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
 
 
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
 
 
 
