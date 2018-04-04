@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Archives | Hexo</title>
+<title>Maven项目使用不了EL表达式 | Hexo</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -122,69 +122,109 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div id="main">
-  <div id="post-list">
-    <ul class="archives-post-list">
-    	<h1 class="info">年 月</h1>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Maven项目使用不了EL表达式">
+            
+	            Maven项目使用不了EL表达式
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/EL表达式" title='EL表达式'>
+                        EL表达式
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
         
-          <li class="post-items" _href="/2018/04/02/你好，HEXO“/">
-            <h3 class="post-item-title">
-            	<a href="/2018/04/02/你好，HEXO“/"> 你好，HEXO “  </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2017/03/10/shiro实现/">
-            <h3 class="post-item-title">
-            	<a href="/2017/03/10/shiro实现/"> shiro实现 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2017/03/03/shiro/">
-            <h3 class="post-item-title">
-            	<a href="/2017/03/03/shiro/"> shiro的工作原理 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/06/15/Nginx/">
-            <h3 class="post-item-title">
-            	<a href="/2016/06/15/Nginx/"> Nginx介绍，使用 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/04/20/正向代理和反向代理/">
-            <h3 class="post-item-title">
-            	<a href="/2016/04/20/正向代理和反向代理/"> 正向代理,反向代理和透明代理的原理和区别! </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/04/05/dos命令/">
-            <h3 class="post-item-title">
-            	<a href="/2016/04/05/dos命令/"> 常用dos命令 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/03/05/maven使用el表达式/">
-            <h3 class="post-item-title">
-            	<a href="/2016/03/05/maven使用el表达式/"> Maven项目使用不了EL表达式 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/03/01/log4j/">
-            <h3 class="post-item-title">
-            	<a href="/2016/03/01/log4j/"> log4j日志存储到本地 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/02/10/ssm/">
-            <h3 class="post-item-title">
-            	<a href="/2016/02/10/ssm/"> SSM框架整合 </a>
-            </h3>  
-          </li>
-        
-    </ul>
-  </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/03/05</span>
+        </span>
+    
 </div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>760</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Maven项目里面Jsp使用EL表达式不生效"><a href="#Maven项目里面Jsp使用EL表达式不生效" class="headerlink" title="Maven项目里面Jsp使用EL表达式不生效"></a>Maven项目里面Jsp使用EL表达式不生效</h1><p>本来是为了写个springmvc的小demo,雏形搭建起来后想起来做成maven的好了,就重新建的maven项目,坑就从这里开始了…</p>
+<p>maven创建web项目默认使用的是web 2.3版本,web.xml文件头中也是2.3的版本..说实话之前没怎么用maven创建过项目,后来觉得maven项目看源码太方便了才更偏向于用maven的,所以这里也根本没在意..引入的javax-servlet-api 2.5的版本.然后发现jsp文件中的el表达式都原样输出了,看起来el表达式根本没解析..这就怪了,还好之前有个非maven创建的一模一样的demo,运行一遍无任何问题..基本锁定maven问题,而差异化的根源也确定在了web 2.3这个版本上..</p>
+<p>然后百度,基本是这样的答案:2.5之前web.xml文件中的头定义中,el表达式默认是忽略不解析的,故需要显示声明解析el表达式,3种方案:</p>
+<ul>
+<li><p>方案1,在jsp文件头上添加如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page isELIgnored=&quot;false&quot; %&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案2,在web.xml文件中如下定义:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;jsp-config&gt;</span><br><span class="line">    &lt;jsp-property-group&gt;</span><br><span class="line">        &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;</span><br><span class="line">        &lt;el-ignored&gt;false&lt;/el-ignored&gt;</span><br><span class="line">        &lt;scripting-invalid&gt;true&lt;/scripting-invalid&gt;</span><br><span class="line">    &lt;/jsp-property-group&gt;</span><br><span class="line">&lt;/jsp-config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案3,改变web.xml中的头为2.5之上的版本..</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; version=&quot;2.5&quot;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>这3种方案都是确实有效的,我改了web.xml的头为3.0的版本,再次运行ok了…</strong></p>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2016/04/05/dos命令/" class="pre-post btn btn-default" title='常用dos命令'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">常用dos命令</span>
+        </a>
+    
+    
+        <a href="/2016/03/01/log4j/" class="next-post btn btn-default" title='log4j日志存储到本地'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">log4j日志存储到本地</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
 
 
 

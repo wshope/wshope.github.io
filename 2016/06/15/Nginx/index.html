@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Nginx介绍，使用 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Nginx介绍，使用">
+            
+	            Nginx介绍，使用
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/nginx" title='nginx'>
+                        nginx
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2016/06/15</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>657</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="Nginx高负载均衡服务器"><a href="#Nginx高负载均衡服务器" class="headerlink" title="Nginx高负载均衡服务器"></a>Nginx高负载均衡服务器</h1><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Nginx (“engine x”) 是一个高性能的 HTTP 和反向代理服务器，也是一个 IMAP/POP3/SMTP 代理服务器。 Nginx 是由 Igor Sysoev 为俄罗斯访问量第二的Rambler.ru 站点开发的，第一个公开版本0.1.0发布于2004年10月4日。其将源代码以类BSD许可证的形式发布，因它的稳定性、丰富的功能集、示例配置文件和低系统资源的消耗而闻名。<br>其特点是占有内存少，并发能力强，能够支持高达50000个并发连接响应。这归功于它选择了epoll and kqueue作为开发模型（socket数量不限制）(Apache采用的select开发模型)。它处理请求是异步非阻塞，在高并发下保持低资源低消耗高性能。非常稳定，bug极少。Apache使用处理每个连接都需要一个进程，其并发性能不是很好。而Nginx使用多路复用的技术，让一个进程处理多个连接，所以并发性能比较好。可以说构建大型网站无一例外都是使用nginx，如：新浪、网易、腾讯、京东、淘宝等。</p>
+<ul>
+<li>Nginx是一个高性能的HTTP和方向代理服务器</li>
+<li>采用C语言编写</li>
+<li>支持的操作系统众多，windows、linux、MacOS X</li>
+<li>安全性高，外界只能访问nginx所在服务器，nginx将请求转发内部服务器。调用后，返回调用的结果</li>
+<li>可实现负载均衡</li>
+<li><p>Rewrite功能强大<br>电商、互联网架构大部分都采用Nginx+Tomcat的架构。<br>官网地址：<a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a><br>###Nginx和Apache、IIS等比较<br><img src="ng1.png" alt="ng"><br>根据W3Techs公布的数据，Nginx目前已经在Web服务器领域有了一定的地位。<br>在排名前1000的网站中，Nginx占据了将近三分之一的席位（29.1%），已经取代了IIS（仅为12.7%）第二名的位置。当然，Apache还是当之无愧的老大，占39.1%。这表明，大型网站更愿意使用开源的web服务器。Google服务器也有8.2%的份额。<br>在排名前100万的网站中，主流服务器仍为Apache，占据了63.7%的份额，也有很大一部分使用IIS，占16.7%。Nginx占据了14.2%。<br>这得益于Nginx使用了最新的epoll（Linux 2.6内核）和kqueue（freebsd）网络I/O模型，而Apache则使用的是传统的select模型。目前Linux下能够承受高并发访问的Squid、Memcached都采用的是epoll网络I/O模型。<br>处理大量的连接的读写，Apache所采用的select网络I/O模型非常低效。下面用一个比喻来解析Apache采用的select模型和Nginx采用的epoll模型进行之间的区别：<br>假设你在大学读书，住的宿舍楼有很多间房间，你的朋友要来找你。select版宿管大妈就会带着你的朋友挨个房间去找，直到找到你为止。而epoll版宿管大妈会先记下每位同学的房间号，你的朋友来时，只需告诉你的朋友你住在哪个房间即可，不用亲自带着你的朋友满大楼找人。如果来了10000个人，都要找自己住这栋楼的同学时，select版和epoll版宿管大妈，谁的效率更高，不言自明。同理，在高并发服务器中，轮询I/O是最耗时间的操作之一，select和epoll的性能谁的性能更高，同样十分明了。</p>
+<h3 id="Nginx目录结构"><a href="#Nginx目录结构" class="headerlink" title="Nginx目录结构"></a>Nginx目录结构</h3><p><img src="ng2.png" alt="ng"></p>
+<h3 id="Nginx配置文件"><a href="#Nginx配置文件" class="headerlink" title="Nginx配置文件"></a>Nginx配置文件</h3><pre><code>conf/nginx.conf
+系统配置：server，可以配置多个server
+转发规则：location路径、root目录、index欢迎页面
+反向代理规则：location拦截路径、proxy_pass转向地址、index
+</code></pre><h3 id="Nginx优化"><a href="#Nginx优化" class="headerlink" title="Nginx优化"></a>Nginx优化</h3></li>
+<li>user root;    #对应系统哪个用户，最好专为nginx创建用户和组，并单独设置权限，这样安全。如：user nginx nginx。</li>
+<li>events I/O模型，Linux推荐使用epoll模型。</li>
+<li>worker_processes 1;    #习惯配置和当前服务器的core数相同，或者2倍</li>
+<li>worker_connections 1024;    #开启数为实际数量的1/4，浏览器访问时会自动发起2个；反向代理tomcat又是两个。这个数值和操作系统能打开的文件数。理论上并发数=worker_processes * worker_connections。跟物理内存大小也有关系，因为系统打开的文件数和系统的内存成正比。一般1GB内存可也打开大约10W左右。</li>
+<li>worker_rlimit_nofile    #一个nginx进程打开最多的文件数目，配置和Linux下文件打开个数一致。ulimit –n来查看。最大设置为65535</li>
+<li>keepalive_timeout 设置65左右</li>
+<li>尽量打开Gzip压缩，gzip_comp_level通常设置为3-5，太高会占用CPU</li>
+<li>Error日志优化，运行期间设置crit，可以减少I/O。<h3 id="Nginx启动停止"><a href="#Nginx启动停止" class="headerlink" title="Nginx启动停止"></a>Nginx启动停止</h3>启动：                start nginx.exe    （不能双击，双击后进程无法关掉）<br>停止：                nginx.exe –s stop<br>重新加载：            nginx.exe –s reload<br>验证安装是否成功：    nginx.exe –t<br><img src="ng3.png" alt="ng"><br><strong>注：Windows下有时停止无效，造成开启太多，手工结束进程。</strong></li>
+</ul>
+<h3 id="Linux下部署Nginx"><a href="#Linux下部署Nginx" class="headerlink" title="Linux下部署Nginx"></a>Linux下部署Nginx</h3><h4 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h4><pre><code>yum install nginx    #yum安装nginx，方便它的依赖包自动安装
+whereis nginx        #查看安装后的各目录
+</code></pre><h4 id="启动停止重启"><a href="#启动停止重启" class="headerlink" title="启动停止重启"></a>启动停止重启</h4><pre><code>nginx                #直接执行，配置文件 /etc/nginx/nginx.conf
+nginx -s stop        #停止
+nginx -s reload    #更新
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><pre><code>nginx –t            #测试nginx是否正常
+执行结果：
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+</code></pre><h4 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h4><pre><code>[root@10-19-46-61 nginx]# ps -ef |grep nginx
+执行结果：
+root  28764 1  0 Mar14 ?        00:00:00 nginx: master process ./nginx
+nginx 2071 28764  0 08:44 ?        00:00:00 nginx: worker process
+nginx 2072 28764  0 08:44 ?        00:00:00 nginx: worker process
+root  2399  2114  0 11:22 pts/0    00:00:00 grep nginx
+</code></pre><h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><pre><code>目前后台系统文件上传会有两个问题，一个图片上传保存到服务器，一个图片的回显，需要把nginx和tomcat和图片服务器执行http://image/jt.com指向同一台服务器。
+</code></pre><h3 id="nginx作用"><a href="#nginx作用" class="headerlink" title="nginx作用"></a>nginx作用</h3><h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><pre><code>和日常我们上网不同，在公司我们上网时，不是所有电脑直接访问外网，而是访问一个代理服务器，由代理服务器再访问我们要访问的网站，代理服务器获得访问网站的返回信息后，再返回给我们。这种代理我们的电脑的方式叫做正向代理。
+</code></pre><p><img src="ng4.png" alt="ng"></p>
+<pre><code>而nginx不同，它实现也是代理，但是代理的后台服务器，我们访问nginx，而nginx代理后面的服务器，由它去决定具体访问哪台服务器。这种方式和正向代理刚好反过来，所以把这种方式称作反向代理。
+反向代理的好处，它屏蔽了后台具体的服务器，我们访问者根本不知道访问的哪台服务器，这样使访问更加安全。
+</code></pre><p><img src="ng5.png" alt="ng"></p>
+<pre><code>通过前置机（也叫踏板机）将内网和外网隔离，用户只能访问前置机，其他的机器是无法直接访问内网中其他服务器资源，必须通过前置机中转，请求重定向才可以。这样保证了网络的安全。
+</code></pre><h4 id="流行的nginx部署结构"><a href="#流行的nginx部署结构" class="headerlink" title="流行的nginx部署结构"></a>流行的nginx部署结构</h4><p><img src="ng6.png" alt=""></p>
+<pre><code>先通过一个nginx进行转发到2个nginx上，然后再通过nginx进行负载到多个tomcat集群上。这样的结构优点是，防止单个节点压力过重。也可以实现keepalive和HAProxy+nginx集群，实现nginx高可用。
+</code></pre><h4 id="请求转发"><a href="#请求转发" class="headerlink" title="请求转发"></a>请求转发</h4><pre><code>当用户访问http://localhost:80，nginx将这个请求什么也不做，只负责转发到tomcat的访问地址http://localhost:8080
+server {
+        listen       80;
+        server_name  localhost;
+
+        location / {                    #拦截所有的资源
+            proxy_pass   http://127.0.0.1:8080;    #转向tomcat的地址
+        }
+
+}
+</code></pre><h4 id="动静分离（指向一个目录）"><a href="#动静分离（指向一个目录）" class="headerlink" title="动静分离（指向一个目录）"></a>动静分离（指向一个目录）</h4><pre><code>静态资源：图片、css、js、html（静态资源处理时并发非常高）
+动态资源：asp/aspx、php、jsp
+
+nginx默认配置
+location / {
+root   html;  #相对路径，配置了一个html目录，我们可以将网站所用到的所有的静态资源从war中移除，放到这个目录下。
+index  index.html index.htm;        #配置的欢迎页面
+}
+传统将项目是把资源一起放到war中，而动静分离是把静态资源从war中剥离出来，单独放在一个目录中。这样当访问静态资源时，就由nginx直接重定向文件资源。当访问动态资源就由tomcat解析。nginx解析静态比tomcat快很多。
+</code></pre><h4 id="图片服务器（指向一个目录）"><a href="#图片服务器（指向一个目录）" class="headerlink" title="图片服务器（指向一个目录）"></a>图片服务器（指向一个目录）</h4><pre><code>#图片服务器 C:\Windows\System32\drivers\etc\hosts
+server {
+    listen       80;
+    server_name  image.xx.com;        #域名地址，修改hosts文件做一个配置 image.jt.com 127.0.0.1
+
+    location / {
+root c:\\jt-upload;        #图片文件所在目录，按日期来分目录：yyyy/mm/dd/uuid.jpg或者当前时间的毫秒数+随机值.jpg
+    }
+}
+目录：C:\jt-upload\images\2016\03\07\607.jpg
+访问：http://image.xx.com/images/2016/03/07/607.jpg
+</code></pre><h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><p>提供4种负载均衡策略：</p>
+<ul>
+<li>轮询：每个请求按时间顺序轮流分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。</li>
+<li>权重：指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。</li>
+<li>IP_HASH：每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，针对解决session共享问题。</li>
+<li><p>URL_HASH（第三方）：访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。FAIR（第三方）：按后端服务器的响应时间来分配请求，响应时间短的优先分配。针对解决session共享问题。</p>
+<h6 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h6><pre><code>默认配置，tomcats有n个，请求就被平均分配到这n个服务器上。请求次数%n，平均分配到每个服务器。
+例子：3个tomcat
+修改3个端口，在同一台服务器上启动3个tomcat。每个tomcat下放一个index.html。然后内容修改，分别展示T1，T2，T3。当请求nignx，通过这种方法验证得出默认nginx轮询这3个页面，但顺序不一定是配置的顺序。
+前台，有3个tomcat集群，用户访问时轮询转向到某一个tomcat
+server {
+listen       80;
+server_name  www.jt.com;
+
+location / {                    #拦截所有的资源
+    proxy_pass   http://jt_tomcats;    #引用定义的upstream
+}
+
+    }
+
+配置一个upstream，声明一个名称xx_tomcats，配置多个ip地址转向，默认就是轮询。
+    upstream xx_tomcats {
+server 127.0.0.1:8080;
+server 127.0.0.1:8090;
+server 127.0.0.1:8100;
+    }
+轮询方式存在问题：服务器有性能比较好的，有性能比较差的。新的服务器的配置比旧的服务器强悍很多。CPU核也多，内存也大，硬盘容量也大，速度还快。
+如果还使用轮询的方式，就会造成新服务器资源的浪费，旧的服务器资源压力大。显然资源分配不合理，应该多劳多得。
+</code></pre><h5 id="权重"><a href="#权重" class="headerlink" title="权重"></a>权重</h5><pre><code>前台，有3个tomcat集群，用户访问时轮询转向到某一个tomcat
+server {
+listen       80;
+server_name  www.xxx.com;
+
+location / {                    #拦截所有的资源
+    proxy_pass   http://xx;    #引用下面定义的upstream
+}
+}
+配置一个upstream，声明一个名称jt，配置多个ip地址转向，默认就是轮询
+upstream xx {
+server 127.0.0.1:8080 weight=8;        #访问请求分成9份，这个tomcat负责8份的链接
+server 127.0.0.1:8090 weight=1;        #访问请求分成9份，这个tomcat负责1份的链接
+server 127.0.0.1:8100 down;        #这个tomcat暂时不参加负载
+}
+</code></pre></li>
+</ul>
+
+    </div>
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/03/03/shiro/" class="pre-post btn btn-default" title='shiro的工作原理'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">shiro的工作原理</span>
+        </a>
+    
+    
+        <a href="/2016/04/20/正向代理和反向代理/" class="next-post btn btn-default" title='正向代理,反向代理和透明代理的原理和区别!'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">正向代理,反向代理和透明代理的原理和区别!</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/"><i class="fa" aria-hidden="true">April 2018</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/"><i class="fa" aria-hidden="true">June 2016</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/shiro-shou授权/" style="font-size: 10px;">shiro shou授权</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/正向代理-反向代理-透明代理/" style="font-size: 10px;">正向代理 反向代理  透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>
