@@ -38,6 +38,8 @@
     
 
 
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
 <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -168,7 +170,7 @@
             
             
             <p class="fa fa-exclamation-triangle warning">
-                本文于<strong>770</strong>天之前发表，文中内容可能已经过时。
+                本文于<strong>771</strong>天之前发表，文中内容可能已经过时。
             </p>
         
     </div>
@@ -260,7 +262,20 @@ public class log4jlistener implements ServletContextListener {
 
     <div id="comments">
         
-   <p>评论系统未开启，无法评论！</p>
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: window.location.pathname,
+        owner:"",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
 
     </div>
 
