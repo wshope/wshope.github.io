@@ -583,7 +583,7 @@ id=&quot;jt-manage&quot; version=&quot;2.5&quot;&gt;
 	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        id: window.location.pathname,
+        id: decodeURI(window.location.pathname),
         owner:"wshope",
         repo:"wshope.github.io",
         oauth: {
