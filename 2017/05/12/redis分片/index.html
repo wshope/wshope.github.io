@@ -1,0 +1,638 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>redis分片 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="redis分片">
+            
+	            redis分片
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/redis分片" title='redis分片'>
+                        redis分片
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/05/12</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>335</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="什么是分片"><a href="#什么是分片" class="headerlink" title="什么是分片"></a>什么是分片</h3><pre><code>分片就是可能一台redis的内存不够用，这个时候不想升级配件的情况下，配置redis集群，同过redis分片，把数据存储到
+不同的redis服务器里面。
+</code></pre><h3 id="安装两个服务"><a href="#安装两个服务" class="headerlink" title="安装两个服务"></a>安装两个服务</h3><h4 id="打开6379端口"><a href="#打开6379端口" class="headerlink" title="打开6379端口"></a>打开6379端口</h4><pre><code>/sbin/iptables -I INPUT -p tcp --dport 6379 -j ACCEPT
+/etc/rc.d/init.d/iptables save        #修改生效
+/etc/init.d/iptables status            #查看配置
+</code></pre><h4 id="复制改端口无需再次安装"><a href="#复制改端口无需再次安装" class="headerlink" title="复制改端口无需再次安装"></a>复制改端口无需再次安装</h4><pre><code>只需要复制配置文件，启动时选择配置文件即可。
+cd /usr/local/src/redis/redis.2.8.17
+cp redis.conf redis6380.conf
+vi redis6380.conf    #修改端口为6380
+redis-server redis6380.conf
+注意：启动后，会残留些数据，不完全，必须flushall清除掉。
+</code></pre><h4 id="简洁开启实例"><a href="#简洁开启实例" class="headerlink" title="简洁开启实例"></a>简洁开启实例</h4><pre><code>redis-server --port 6300 --daemonize yes
+</code></pre><h4 id="开放远程访问"><a href="#开放远程访问" class="headerlink" title="开放远程访问"></a>开放远程访问</h4><pre><code>redis.conf中bind默认绑定127.0.0.1，只有本地可以访问。
+ps -ef |grep redis
+root  2545  2532  005:51 pts/0   00:00:07 redis-server *:6379
+root  2710  2674  006:14 pts/2   00:00:05 redis-server 127.0.0.1:6479
+讲bind 127.0.0.1注释掉，前面加个#即可
+root  2545  2532  005:51 pts/0   00:00:07 redis-server *:6379
+root  2710  2674  006:14 pts/2   00:00:05 redis-server *:6479
+变成两个*即可远程访问，可以看出默认的redis.conf和复制后的文件还是有差异的。是个坑啊。
+</code></pre><h3 id="Redis分片"><a href="#Redis分片" class="headerlink" title="Redis分片"></a>Redis分片</h3><p><img src="redisfp1.png" alt="redisfp1"><br><img src="redisfp2.png" alt="redisfp2"><br>    访问redis的驱动包。</p>
+<pre><code>使用最为广泛的是Jedis和Redisson（官方推荐），在企业中采用最多的是Jedis，我们重点学习Jedis。
+Jedis官网地址：https://github.com/xetorthio/jedis
+</code></pre><h4 id="第一个jedis示例"><a href="#第一个jedis示例" class="headerlink" title="第一个jedis示例"></a>第一个jedis示例</h4><pre><code>package redis;
+
+import java.util.List;
+
+import redis.clients.jedis.Jedis;
+
+public class TestRedis {
+    public static void main(String[] args) {
+        //设置连接服务器IP地址和访问端口
+        Jedis jedis = new Jedis(&quot;192.168.115.115&quot;,6379);
+
+        //单个值
+        //jedis.set(&quot;test&quot;, &quot;456789&quot;);                //设置值
+        //System.out.println(jedis.get(&quot;test&quot;));        //获取值
+
+        //多个值
+        //jedis.mset(&quot;test1&quot;,&quot;1&quot;,&quot;test2&quot;,&quot;2&quot;);
+        List&lt;String&gt; oList = jedis.mget(&quot;test1&quot;,&quot;test2&quot;);
+        for(String s : oList){
+            System.out.println(s);
+        }
+
+        jedis.close();    //关闭
+    }
+}
+命令窗口：
+127.0.0.1:6379&gt; keys *
+1) &quot;bomb&quot;
+127.0.0.1:6379&gt; get bomb
+&quot;tnt&quot;
+127.0.0.1:6379&gt;
+</code></pre><h4 id="连接池JedisPool创建jedis连接"><a href="#连接池JedisPool创建jedis连接" class="headerlink" title="连接池JedisPool创建jedis连接"></a>连接池JedisPool创建jedis连接</h4><pre><code>package cn.redis;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+public class JedisPoolDemo {
+
+    public static void main(String[] args) {
+        // 构建连接池配置信息
+JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        // 设置最大连接数
+        jedisPoolConfig.setMaxTotal(200);
+
+        // 构建连接池
+JedisPool jedisPool = new JedisPool(jedisPoolConfig, &quot;127.0.0.1&quot;, 6379);
+
+        // 从连接池中获取连接
+        Jedis jedis = jedisPool.getResource();
+
+        // 读取数据
+        System.out.println(jedis.get(&quot;bomb&quot;));
+
+        // 将连接还回到连接池中
+        jedisPool.returnResource(jedis);
+
+        // 释放连接池
+        jedisPool.close();
+    }
+}
+</code></pre><h4 id="分片ShardedJedisPool"><a href="#分片ShardedJedisPool" class="headerlink" title="分片ShardedJedisPool"></a>分片ShardedJedisPool</h4><pre><code>实现分布式缓存，Redis多个节点的透明访问
+    @Test    //分片
+    public void shard(){
+
+
+        //构造各个节点链接信息，host和port
+        List&lt;JedisShardInfo&gt; infoList = new ArrayList&lt;JedisShardInfo&gt;();
+        JedisShardInfo info1 = new JedisShardInfo(&quot;192.168.163.200&quot;,6379);
+        //info1.setPassword(&quot;123456&quot;);
+        infoList.add(info1);
+        JedisShardInfo info2 = new JedisShardInfo(&quot;192.168.163.200&quot;,6380);
+        infoList.add(info2);
+        JedisShardInfo info3 = new JedisShardInfo(&quot;192.168.163.200&quot;,6381);
+        infoList.add(info3);
+
+        //分片jedis
+
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxTotal(500);    //最大链接数
+
+        ShardedJedisPool pool = new ShardedJedisPool(config, infoList);
+        //ShardedJedis jedis = new ShardedJedis(infoList);
+        ShardedJedis jedis = pool.getResource();    //从pool中获取
+        for(int i=0;i&lt;10;i++){
+            jedis.set(&quot;n&quot;+i, &quot;t&quot;+i);
+        }
+        System.out.println(jedis.get(&quot;n9&quot;));
+        jedis.close();
+    }
+</code></pre><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><img src="redisfp3.png" alt="redisfp3"></p>
+<pre><code>在分布式集群中，对机器的添加删除，或者机器故障后自动脱离集群这些操作是分布式集群管理最基本的功能。如果采用常用的hash(object)%N算法，那么在有机器添加或者删除后，很多原有的数据就无法找到了，这样严重的违反了单调性原则。
+</code></pre><h4 id="hash一致性算法"><a href="#hash一致性算法" class="headerlink" title="hash一致性算法"></a>hash一致性算法</h4><pre><code>一致性哈希算法在1997年由麻省理工学院提出。
+hash取余产生的问题：新增节点、删除节点会让绝大多数的缓存失效，除了导致性能骤降外很有可能会压垮后台服务器。
+解决点一：
+集群中节点挂掉或新增节点的时候，要对已有节点的影响降到最小。其解决思路，就是对缓存的object和Node使用同一个hash函数(实际不需要完全一致，但至少保证产生的hash空间相同)，让他们映射到同一个hash空间中去，当然这很容易实现，因为大多数的hash函数都是返回uint32类型，其空间即为1~232 232-1（2^32 = 4 294 967 296，近43亿）。然后各个Node就将整个hash空间分割成多个interval空间，然后对于每个缓存对象object，都按照顺时针方向遇到的第一个Node负责缓存它。通过这种方法，在新增加Node和删除Node的时候，只会对顺时针方向遇到的第一个Node负责的空间造成影响，其余的空间都仍然有效。
+</code></pre><p><img src="redisfp4.png" alt="redisfp4"></p>
+<pre><code>虽然虚拟并不能百分百的解决缓存命中失效的问题，但把问题缩小化，这样影响面小，即使缓存失效，数据库也能承受起用户的负载，从而稳定过渡。
+</code></pre><h4 id="扩展：如何缩短key？"><a href="#扩展：如何缩短key？" class="headerlink" title="扩展：如何缩短key？"></a>扩展：如何缩短key？</h4><pre><code>这么多对象的代表，我们熟知在spring框架中，我们保存spring的上下文时，是一个很长的KEY，那这样的KEY很多时，会导致内存过多的占用，同时这种自定义规则，也很难保证不冲突。如何找到一个规则能让他们避免重复呢？
+md5/hashCode
+</code></pre><h3 id="jedis和Spring整合访问redis"><a href="#jedis和Spring整合访问redis" class="headerlink" title="jedis和Spring整合访问redis"></a>jedis和Spring整合访问redis</h3><h4 id="整合步骤"><a href="#整合步骤" class="headerlink" title="整合步骤"></a>整合步骤</h4><ul>
+<li>引入依赖</li>
+<li>整合配置文件applicationContext-redis.xml</li>
+<li>伪service</li>
+<li><p>注入伪service</p>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>applicationContext-redis.xml</p>
+<!-- 定义集群连接池 -->
+<p><bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" destroy-method="close"></bean></p>
+   <!-- 第一个参数 -->
+<p>   <constructor-arg index="0" ref="jedisPoolConfig"><br>   <constructor-arg index="1"></constructor-arg></constructor-arg></p>
+<pre><code>&lt;list&gt;
+    &lt;!-- 第一个节点 --&gt;
+    &lt;bean class=&quot;redis.clients.jedis.JedisShardInfo&quot;&gt;
+        &lt;constructor-arg index=&quot;0&quot; value=&quot;${redis.node1.ip}&quot;/&gt;
+        &lt;constructor-arg type=&quot;int&quot; index=&quot;1&quot; value=&quot;${redis.node1.port}&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!-- 第二个节点 --&gt;
+    &lt;bean class=&quot;redis.clients.jedis.JedisShardInfo&quot;&gt;
+        &lt;constructor-arg index=&quot;0&quot; value=&quot;${redis.node2.ip}&quot;/&gt;
+        &lt;constructor-arg type=&quot;int&quot; index=&quot;1&quot; value=&quot;${redis.node2.port}&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!-- 第三个节点 --&gt;
+    &lt;bean class=&quot;redis.clients.jedis.JedisShardInfo&quot;&gt;
+        &lt;constructor-arg index=&quot;0&quot; value=&quot;${redis.node3.ip}&quot;/&gt;
+        &lt;constructor-arg type=&quot;int&quot; index=&quot;1&quot; value=&quot;${redis.node3.port}&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/list&gt;
+</code></pre><p>   <br><br>redis.properties<br>redis.maxTotal=50<br>redis.node1.ip=127.0.0.1<br>redis.node1.port=6379<br>#redis.node2.ip=127.0.0.1<br>#redis.node2.port=6380</p>
+<h4 id="伪Service"><a href="#伪Service" class="headerlink" title="伪Service"></a>伪Service</h4><p>package com.jt.manage.service;</p>
+<p>import org.springframework.beans.factory.annotation.Autowired;</p>
+<p>import redis.clients.jedis.ShardedJedis;<br>import redis.clients.jedis.ShardedJedisPool;</p>
+<p>public class RedisService {<br>   @Autowired<br>   private ShardedJedisPool shardedJedisPool;</p>
+<p>   //保存数据到redis中<br>   public String set(String key, String value){</p>
+<pre><code>ShardedJedis shardedJedis = null;
+
+try{
+    // 从连接池中获取到jedis分片对象
+    shardedJedis = shardedJedisPool.getResource();
+    return shardedJedis.set(key, value);
+} catch (Exception e){
+    e.printStackTrace();
+} finally {
+    if (null != shardedJedis){
+        //关闭，检测连接是否有效，有效则放回到连接池中，无效则重置状态
+        shardedJedis.close();
+    }
+}
+return null;
+</code></pre><p>   }</p>
+<p>   //从redis获取数据<br>   public String get(String key){</p>
+<pre><code>ShardedJedis shardedJedis = null;
+
+try{
+    // 从连接池中获取到jedis分片对象
+    shardedJedis = shardedJedisPool.getResource();
+    return shardedJedis.get(key);
+} catch (Exception e){
+    e.printStackTrace();
+} finally {
+    if (null != shardedJedis){
+        //关闭，检测连接是否有效，有效则放回到连接池中，无效则重置状态
+        shardedJedis.close();
+    }
+}
+return null;
+</code></pre><p>   }<br>}</p>
+<h4 id="重构RedisService"><a href="#重构RedisService" class="headerlink" title="*重构RedisService"></a>*重构RedisService</h4><p>两个方法有很多重复代码，如何消除呢？<br>类似js中的回调来解决。目的简化代码，抽取公用逻辑。<br>com.jt.common.service.Function&lt;E, T&gt;<br>package com.jt.common.service;</p>
+<p>public interface Function&lt;E, T&gt; {</p>
+<p>   public T execute(E e);</p>
+<p>}<br>com.jt.common.service.RedisService<br>package com.jt.manage.service;</p>
+<p>import org.springframework.beans.factory.annotation.Autowired;</p>
+<p>import redis.clients.jedis.ShardedJedis;<br>import redis.clients.jedis.ShardedJedisPool;</p>
+<p>public class RedisService {<br>@Autowired<br>private ShardedJedisPool shardedJedisPool;</p>
+<p>//保存数据到redis中<br>private &lt;E,T&gt;T execute(Function&lt;ShardedJedis,T&gt; function){<br>   ShardedJedis shardedJedis = null;</p>
+<p>   try{</p>
+<pre><code>// 从连接池中获取到jedis分片对象
+shardedJedis = shardedJedisPool.getResource();
+return function.execute(shardedJedis);
+</code></pre><p>   } catch (Exception e){</p>
+<pre><code>e.printStackTrace();
+</code></pre><p>   } finally {</p>
+<pre><code>if (null != shardedJedis){
+    //关闭，检测连接是否有效，有效则放回到连接池中，无效则重置状态
+    shardedJedis.close();
+}
+</code></pre><p>   }<br>   return null;<br>}</p>
+<p>//保存数据到redis中<br>public String set(final String key, final String value){<br>   return this.execute(new Function&lt;ShardedJedis, String&gt;() {</p>
+<pre><code>@Override
+public String execute(ShardedJedis shardedJedis) {
+    return shardedJedis.set(key, value);
+}
+</code></pre><p>   });<br>}</p>
+<p>//保存数据到redis中，并设置生存时间<br>public String set(final String key, final String value, final Integer seconds){<br>   return this.execute(new Function&lt;ShardedJedis, String&gt;() {</p>
+<pre><code>@Override
+public String execute(ShardedJedis shardedJedis) {
+    String result = shardedJedis.set(key, value);
+    shardedJedis.expire(key, seconds);    //设置生存时间
+    return result;
+}
+</code></pre><p>   });<br>}</p>
+<p>//从redis获取数据<br>public String get(final String key){<br>   return this.execute(new Function&lt;ShardedJedis, String&gt;() {</p>
+<pre><code>@Override
+public String execute(ShardedJedis shardedJedis) {
+    return shardedJedis.get(key);
+}
+</code></pre><p>   });<br>}</p>
+<p>//设置key的生存时间，单位：秒<br>public Long expire(final String key, final Integer seconds){<br>   return this.execute(new Function&lt;ShardedJedis, Long&gt;(){</p>
+<pre><code>@Override
+public Long execute(ShardedJedis shardedJedis) {
+    return shardedJedis.expire(key, seconds);
+}
+</code></pre><p>   });<br>}</p>
+<p>//删除key<br>public Long del(final String key){<br>   return this.execute(new Function&lt;ShardedJedis, Long&gt;(){</p>
+<pre><code>@Override
+public Long execute(ShardedJedis shardedJedis) {
+    return shardedJedis.del(key);
+}
+</code></pre><p>   });<br>}<br>}</p>
+<h4 id="缓存的作用"><a href="#缓存的作用" class="headerlink" title="缓存的作用"></a>缓存的作用</h4><p>存在项目中或者系统中，分担底层数据库的压力。缓存是不能影响业务逻辑的。比如说缓存服务器宕机了，能说因为缓存服务器宕机了，业务走不下去了。这种理由当然不行。缓存一定不能影响正常的业务逻辑的执行。
+ </p>
+</li>
+</ul>
+
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2017/05/10/redis命令篇/" class="next-post btn btn-default" title='redis命令篇'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">redis命令篇</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro-shou授权/" style="font-size: 10px;">shiro shou授权</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/正向代理-反向代理-透明代理/" style="font-size: 10px;">正向代理 反向代理  透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>redis介绍（介绍，使用） | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="redis介绍（介绍，使用）">
+            
+	            redis介绍（介绍，使用）
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/redis使用，介绍" title='redis使用，介绍'>
+                        redis使用，介绍
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/05/07</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>340</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="为什么要用缓存？"><a href="#为什么要用缓存？" class="headerlink" title="为什么要用缓存？"></a>为什么要用缓存？</h2><pre><code>电商网站的行为非常特殊，大量的商品的浏览，对热门的商品，卖的好的商品，评价好的商品浏览频繁。而这部分数据遵循二八定律。只占整体的二成。既然大部分的业务访问都集中在这一小部分数据上，那么如果把这一小部分数据缓存在内存中，是不是就可以减少数据库的访问压力，从而提高整个网站的数据访问速度，改善数据库的写入性能了呢？答案是显而易见的。我们都知道数据库访问创建链接，执行查询，销毁链接是一个非常耗费资源和缓慢的过程。而大量的拦截请求直接从内存读取数据返回给用户。性能提高数百倍。
+缓存是改善性能的第一手段。
+</code></pre><h2 id="什么是nosql"><a href="#什么是nosql" class="headerlink" title="什么是nosql"></a>什么是nosql</h2><pre><code>Nosql=no only sql 泛指非关系型数据库。
+随着互联网web2.0网站的兴起，传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，尤其是大数据应用难题。
+</code></pre><h2 id="主流的redis比较"><a href="#主流的redis比较" class="headerlink" title="主流的redis比较"></a>主流的redis比较</h2><p><img src="redis1.png" alt="redis1"></p>
+<h2 id="redis简介"><a href="#redis简介" class="headerlink" title="redis简介"></a>redis简介</h2><pre><code>官网：http://redis.io
+Redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set --有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。
+Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用。它提供了Java，C/C++，C#，PHP，JavaScript，Perl，Object-C，Python，Ruby，Erlang等客户端，使用很方便。
+Redis支持主从同步。数据可以从主服务器向任意数量的从服务器上同步，从服务器可以是关联其他从服务器的主服务器。这使得Redis可执行单层树复制。存盘可以有意无意的对数据进行写操作。由于完全实现了发布/订阅机制，使得从数据库在任何地方同步树时，可订阅一个频道并接收主服务器完整的消息发布记录。同步对读取操作的可扩展性和数据冗余很有帮助。
+可以充当缓存、队列等作用。
+源码脱管：    https://github.com/antirez/redis
+</code></pre><h2 id="redis的历史和发展"><a href="#redis的历史和发展" class="headerlink" title="redis的历史和发展"></a>redis的历史和发展</h2><pre><code>2008年，意大利的一家创业公司Merzia推出一款基于MySQL的网站实时统计系统LLOOGG，然而没过多久该公司的创始人Salvatore Sanfilippo便对MySQL的性能感到失望，于是他决定亲自为LLOOGG量身定做一个数据库，并于2009年开发完成，这个数据库就是Redis。不过Salvatore Sanfilippo并不满足只将Redis用于LLOOGG这一款产品，而是希望更多的人使用它，于是在同一年Salvatore Sanfilippo将Redis开源发布，并开始和Redis的另一名主要的代码贡献者Pieter Noordhuis一起继续着Redis的开发，直到今天。
+短短几年，Redis就拥有了庞大的用户群体。Hacker News在2012年发布了一份数据库的使用情况调查，结果显示有近12%的公司在使用Redis。国内如京东、淘宝、新浪微博、街旁网、知乎网、国外如GitHub、Stack Overflow、Flickr等都是Redis的用户。
+VMware公司从2010年开始赞助Redis的开发，Salvatore Sanfilippo和Pieter Noordhuis也分别在3月5月加入VMware，全职开发Redis。
+</code></pre><h2 id="Redis的特性"><a href="#Redis的特性" class="headerlink" title="Redis的特性"></a>Redis的特性</h2><ol>
+<li>多种数据类型存储<ul>
+<li>字符串类型</li>
+<li>散列类型</li>
+<li>列表类型</li>
+<li>集合类型</li>
+<li>有序集合类型</li>
+</ul>
+</li>
+<li>内存存储与持久化<ul>
+<li>内存的读写速度远快于硬盘</li>
+<li>自身提供了持久化功能（RDB、AOF两种方式）</li>
+</ul>
+</li>
+<li>功能丰富<ul>
+<li>可以用作缓存、队列、消息订阅/发布</li>
+<li>支持键的生存时间</li>
+<li>按照一定规则删除相应的键</li>
+</ul>
+</li>
+<li>简单稳定<ul>
+<li>相比SQL而言更加简洁</li>
+<li>不同语言的客户端丰富</li>
+<li>基于C语言开发，代码量只有3万多行<h2 id="版本说明"><a href="#版本说明" class="headerlink" title="版本说明"></a>版本说明</h2></li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>Redis的版本规则如下：<br>次版本号（第一个小数点后的数字）为偶数的版本是稳定版本（2.4、2.6等），奇数为非稳定版本（2.5、2.7），一般推荐在生产环境使用稳定版本。<br>说明：Redis官方是不支持windows平台的，windows版本是由微软自己建立的分支，基于官方的Redis源码上进行编译、发布、维护的，所以windows平台的Redis版本要略低于官方版本。<br>所以使用redis推荐在linux下使用。从这也可以知道电商项目、互联网项目都是在linux上运行的。</p>
+<p><a href="http://download.redis.io/releases/redis-3.0.7.tar.gz" target="_blank" rel="noopener">Linux版本3.0.7</a></p>
+<hr>
+<h2 id="Linux下安装Redis"><a href="#Linux下安装Redis" class="headerlink" title="Linux下安装Redis"></a>Linux下安装Redis</h2><pre><code>注意：redis3.0之后引入了集群
+mkdir –p /usr/local/src/redis
+cd /usr/local/src/redis
+wget http://download.redis.io/releases/redis-3.0.7.tar.gz
+tar xzf redis-3.0.7.tar.gz #tar xvf redis-3.0.7.tar.gz
+cd redis-3.0.7
+make                #下载后编译，过程稍长
+make install        #进行安装
+make PREFIX=/usr/local/src/redis install        #指定安装目录
+</code></pre><h2 id="Windows-64位-安装"><a href="#Windows-64位-安装" class="headerlink" title="Windows(64位)安装"></a>Windows(64位)安装</h2><pre><code>Windows(64位)版本2.8.19，需要经过visualstudio编译。
+https://github.com/MSOpenTech/redis
+Windows(32位)版本已经不再支持。
+How to build Redis using Visual Studio
+
+You can use the free Visual Studio Community edition available at http://www.visualstudio.com/products/visual-studio-community-vs.
+
+Open the solution file msvs\redisserver.sln in Visual Studio, select a build configuration (Debug or Release) and target (Win32 or x64) then build.
+
+This should create the following executables in the msvs\$(Target)\$(Configuration) folder:
+
+redis-server.exe
+redis-benchmark.exe
+redis-cli.exe
+redis-check-dump.exe
+redis-check-aof.exe
+</code></pre><h2 id="安装系统服务启动"><a href="#安装系统服务启动" class="headerlink" title="安装系统服务启动"></a>安装系统服务启动</h2><pre><code>注册服务：
+redis-server --service-install redis.windows.conf --loglevel verbose
+卸载服务：
+redis-server --service-uninstall
+启动Redis：
+redis-server --service-start
+停止Redis:
+redis-server --service-stop
+</code></pre><h2 id="Redis持久化的两种方式"><a href="#Redis持久化的两种方式" class="headerlink" title="Redis持久化的两种方式"></a>Redis持久化的两种方式</h2><hr>
+<p><strong>rdb</strong></p>
+<pre><code>fork一个进程，遍历hash table，利用copy on write，把整个db dump保存下来。
+save, shutdown, slave 命令会触发这个操作。粒度比较大，如果save, shutdown, 
+slave 之前crash了，则中间的操作没办法恢复。
+
+如果采用save指令进行数据备份.,则会自动的创建一个线程用来实现数据备份.该线程启动后,会造成redis其他线程的阻塞.只有当该线程持久化完毕后,其他线程才会执行.
+如果采用bgsave指令.则会开启后台线程进行数据备份.这时的数据备份不是马上执行.而是等待线程抽空自己执行.不会造成线程的阻塞.但是该操作有延时
+</code></pre><p><strong>rdb备份策略</strong></p>
+<pre><code>说明:如果redis的set操作
+900秒执行1次则备份一次
+300秒执行10次则备份一次
+60秒执行10000次则备份一次
+补充:根据公司的业务逻辑可以修改备份的策略,但是时间间隔越短,则redis的性能越低.
+</code></pre><hr>
+<p><strong>aof</strong></p>
+<pre><code>默认条件下AOF持久化文件不生效.如果将appendonly改为yes时,这时redis的持久化策略则发生改变.不会再采用RDB的模式,而是采用AOF模式.持久化文件的名称appendonly.aof是持久化文件名称.可以认为的进行修改.
+把写操作指令，持续的写到一个类似日志文件里。（类似于从postgresql等数据库导出sql一样，只记录写操作）
+粒度较小，crash之后，只有crash之前没有来得及做日志的操作没办法恢复。
+</code></pre><p><strong>AOF持久化策略</strong></p>
+<pre><code>当AOF持久化策略采用 always时,表示实时持久化,只要有set操作就会进行持久化.性能较低.
+当AOF持久化文件采用everysec时,表示每秒进行一次数据备份.性能比always要高很多.但是不如RDB性能高
+当AOF持久化文件采用 no时,表示持久化的时间交给操作系统自己调用.由操作系统自己决定.
+</code></pre><hr>
+<p><strong>持久化文件的总结</strong></p>
+<pre><code>如果对于redis中的数据完整性要求不高则采用高效的RDB模式进行持久化操作.如果对数据完整性有较高的要求采用AOF的方式(建议采用everysec)
+两种区别就是，一个是持续的用日志记录写操作，crash（崩溃）后利用日志恢复；一个是平时写操作的时候不触发写，只有手动提交save命令，或者是shutdown关闭命令时，才触发备份操作。
+选择的标准，就是看系统是愿意牺牲一些性能，换取更高的缓存一致性（aof），还是愿意写操作频繁的时候，不启用备份来换取更高的性能，待手动运行save的时候，再做备份（rdb）。rdb这个就更有些最终一致性（eventually consistent）的意思了。
+</code></pre><hr>
+<h2 id="Redis中的内存机制"><a href="#Redis中的内存机制" class="headerlink" title="Redis中的内存机制"></a>Redis中的内存机制</h2><p>说明:redis中的内存的配置不会无限的增长.当redis的内存达到一定阈值时,会自动调用内存优化策略维护内存的大小.</p>
+<p><strong>Redis中的内存约定</strong></p>
+<pre><code>通过内存的约定可以直接使用1KB/mb/gb指定内存的大小
+</code></pre><p><img src="redis2.png" alt="redis2"></p>
+<p><strong>内存策略</strong></p>
+<p>1.定义内存的大小</p>
+<p><img src="redis3.png" alt="redis3"></p>
+<p>2.内存优化策略<br>1)volatile-lru:<br>在设定过失效时间的数据中,查找最近最少使用的数据进行删除<br>2)allkeys-lru:<br>在redis中的所有的数据删除最近最少使用的数据<br>3)volatile-random:<br>在设定了超时时间的数据中随机进行删除操作<br>4)allkeys-random所有的key都会进行随机删除操作<br>5)volatile-ttl:查询将要失效的数据进行删除(改属性必须设置超时时间)<br>6)noeviction:如果redis中使用该策略,则不会自动的删除数据,但是如果进行set操作则会进行报错处理.<br><img src="redis4.png" alt="redis4"></p>
+<h2 id="redis启动"><a href="#redis启动" class="headerlink" title="redis启动"></a>redis启动</h2><h3 id="启动配置"><a href="#启动配置" class="headerlink" title="启动配置"></a>启动配置</h3><pre><code>配置文件：redis.conf
+设置模式
+vi redis.conf
+daemonize yes    #默认为no
+端口配置：
+默认6379
+
+配置数据库数量：
+Redis默认开启16个数据库，不能像mysql自定义数据库名称，只能是数值，不能修改。
+
+配置内存大小：
+会生成一个和内存大小一样的文件。
+maxmemory 200mb    #在真实环境必须部署，否则物理内存会被耗尽。一般配置200mb/500mb/1gb/2gb。可以分散到多台服务器，和其它业务共享服务器，以充分利用资源。同时因为分散，防止单点故障，造成大量缓存失效。
+
+maxmemory 200mb
+</code></pre><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><pre><code>redis-server                     #默认找redis.conf配置文件
+redis-server &amp;                    #上面ctrl+c中断reis会退出，这个不会
+redis-server redis6380.conf    #指定配置文件，这样可以启动多个实例
+注意两种启动方式的差异
+ps -ef|grep redis
+root      3511     1  0 16:29 ?   00:00:01 redis-server *:6379
+root      3515     1  0 16:29 ?   00:00:01 redis-server 127.0.0.1:6380
+注释掉redis.conf配置文件中的48行；# bind 127.0.0.1 ::1即可
+</code></pre><h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><pre><code>redis-server –v
+
+Redis server v=3.2.5 sha=00000000:0 malloc=jemalloc-4.0.3 bits=64 build=e6c4c3113548f6b0
+
+redis-cli –v
+</code></pre><h3 id="设置访问密码"><a href="#设置访问密码" class="headerlink" title="设置访问密码"></a>设置访问密码</h3><pre><code>默认没有密码，可以随意访问。redis速度相当快，在一个较好的服务器下，外部用户每秒可以进行15w此的密码尝试，这意味着必须指定非常强大的密码来防止暴力破解。
+如果要加，打开redis.conf的
+requirepass 123456            #480行，设置请求密码，这样访问时都需要先登录
+127.0.0.1:6379&gt;auth 123456        #客户端访问方式
+jedis.auth(“123456”);                #jedis访问方式
+</code></pre><h3 id="详细信息"><a href="#详细信息" class="headerlink" title="详细信息"></a>详细信息</h3><pre><code>redis-cli
+127.0.0.1:6379&gt; info        #查看当前redis节点的详细配置信息
+</code></pre>
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/05/10/redis命令篇/" class="pre-post btn btn-default" title='redis命令篇'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">redis命令篇</span>
+        </a>
+    
+    
+        <a href="/2017/04/05/分布式session共享五种方式/" class="next-post btn btn-default" title='分布式环境下5种session处理策略'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">分布式环境下5种session处理策略</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro-shou授权/" style="font-size: 10px;">shiro shou授权</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/正向代理-反向代理-透明代理/" style="font-size: 10px;">正向代理 反向代理  透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

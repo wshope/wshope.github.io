@@ -1,0 +1,948 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>redis命令篇 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="redis命令篇">
+            
+	            redis命令篇
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/redis命令" title='redis命令'>
+                        redis命令
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/05/10</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>336</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="redis-cli的使用之发送命令"><a href="#redis-cli的使用之发送命令" class="headerlink" title="redis-cli的使用之发送命令"></a>redis-cli的使用之发送命令</h3><pre><code>默认连接：IP 127.0.0.1 端口 6379
+redis-cli
+指定IP端口：
+    redis-cli –h 127.0.0.1 –p 6379
+    Redis提供了PING-PONG机制，测试与客户端和服务器链接是否正常
+    redis-cli ping
+    或
+    redis-cli
+    redis 127.0.0.1:6379&gt;ping
+    PONG
+</code></pre><h3 id="redis-cli的使用之命令返回值"><a href="#redis-cli的使用之命令返回值" class="headerlink" title="redis-cli的使用之命令返回值"></a>redis-cli的使用之命令返回值</h3><pre><code>状态回复（最简单的回复-redis提供的测试命令）
+redis&gt;PING
+PONG
+127.0.0.1:6379&gt;SET test 123
+OK
+错误回复（以error开头，后面跟着错误信息）
+127.0.0.1:6379&gt;TEST
+(error) ERR unknown command &apos;TEST&apos;
+整数回复
+127.0.0.1:6379&gt;INCR test_incr
+(integer) 1
+字符串回复（最长久的一种回复，双引号包裹）
+127.0.0.1:6379&gt;get test
+“123”
+多行字符串回复
+127.0.0.1:6379&gt;KEYS *
+1) &quot;test_incr&quot;
+2) &quot;test&quot;
+</code></pre><h3 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h3><pre><code>127.0.0.1:6379&gt; exit
+</code></pre><h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><pre><code>127.0.0.1:6379&gt;shutdown
+</code></pre><h3 id="基本命令KEYS-GET-SET"><a href="#基本命令KEYS-GET-SET" class="headerlink" title="基本命令KEYS GET SET"></a>基本命令KEYS GET SET</h3><pre><code>字符串类型是redis中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。可以存储JSON化的对象、字节数组等。一个字符串类型键允许存储的数据最大容量是512MB。
+赋值与取值：
+SET key value
+GET key
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; set test 123
+OK
+127.0.0.1:6379&gt; set test1 ab
+OK
+127.0.0.1:6379&gt; keys *
+1) &quot;test1&quot;
+2) &quot;test&quot;
+127.0.0.1:6379&gt; get test
+&quot;123&quot;
+127.0.0.1:6379&gt; get test1
+&quot;abc&quot;
+127.0.0.1:6379&gt; get test2
+(nil)
+127.0.0.1:6379&gt;
+</code></pre><h3 id="redis数据库切换SELECT"><a href="#redis数据库切换SELECT" class="headerlink" title="redis数据库切换SELECT"></a>redis数据库切换SELECT</h3><pre><code>redis默认支持16个数据库，对外都是以一个从0开始的递增数字命名，可以通过参数database来修改默认数据库个数。客户端连接redis服务后会自动选择0号数据库，可以通过select命令更换数据库，例如选择1号数据库：
+127.0.0.1:6379&gt;SELECT 1
+OK
+127.0.0.1:6379&gt;GET test
+(nil)
+说明：
+Redis不支持自定义数据库名称。
+Redis不支持为每个数据库设置访问密码。
+Redis的多个数据库之间不是安全隔离的，FLUSHALL命令会清空所有数据库的数据。
+</code></pre><h3 id="redis的基本命令之KEYS"><a href="#redis的基本命令之KEYS" class="headerlink" title="redis的基本命令之KEYS"></a>redis的基本命令之KEYS</h3><pre><code>获取符合规则的建名列表。
+KEYS *
+keys test[_]*
+keys t[a-d]
+说明：
+？    匹配一个字符
+*   匹配任意个（包括0个）字符
+[]  匹配括号间的任一字符，可以使用“-“表示范围。如a[a-d]匹配ab/ac/ad
+\x    匹配字符x，用于转义符合，如果要匹配“？“就需要使用\?
+</code></pre><h3 id="redis的基本命令之EXISTS"><a href="#redis的基本命令之EXISTS" class="headerlink" title="redis的基本命令之EXISTS"></a>redis的基本命令之EXISTS</h3><pre><code>判断一个键是否存在。
+如果键存在则返回整数类型1，否则返回0。
+127.0.0.1:6379&gt; keys *
+1) &quot;test_incr&quot;
+2) &quot;test&quot;
+127.0.0.1:6379&gt; exists test
+(integer) 1
+127.0.0.1:6379&gt; exists test1
+(integer) 0
+127.0.0.1:6379&gt;
+</code></pre><h3 id="redis的基本命令之DEL"><a href="#redis的基本命令之DEL" class="headerlink" title="redis的基本命令之DEL"></a>redis的基本命令之DEL</h3><pre><code>删除键，可以删除一个或者多个键，多个键用空格隔开，返回值是删除的键的个数。
+127.0.0.1:6379&gt; del test
+(integer) 1
+127.0.0.1:6379&gt; del test
+(integer) 0
+127.0.0.1:6379&gt; del test test_incr
+(integer) 1
+127.0.0.1:6379&gt;
+</code></pre><h3 id="redis的基本命令之TYPE"><a href="#redis的基本命令之TYPE" class="headerlink" title="redis的基本命令之TYPE"></a>redis的基本命令之TYPE</h3><pre><code>获得键值的数据类型，返回值可能是string（字符串）、hash（散列类型）、list（列表类型）、set（集合类型）、zset（有序集合类型）。
+127.0.0.1:6379&gt; keys *
+1) &quot;test1&quot;
+2) &quot;test&quot;
+127.0.0.1:6379&gt; type test
+string
+127.0.0.1:6379&gt; type test1
+string
+</code></pre><h3 id="redis的基本命令之HELP"><a href="#redis的基本命令之HELP" class="headerlink" title="redis的基本命令之HELP"></a>redis的基本命令之HELP</h3><pre><code>127.0.0.1:6379&gt; help
+redis-cli 2.8.19
+Type: &quot;help @&lt;group&gt;&quot; to get a list of commands in &lt;group&gt;
+      &quot;help &lt;command&gt;&quot; for help on &lt;command&gt;
+      &quot;help &lt;tab&gt;&quot; to get a list of possible help topics
+      &quot;quit&quot; to exit
+127.0.0.1:6379&gt; help type
+
+  TYPE key
+  summary: Determine the type stored at key
+  since: 1.0.0
+  group: generic
+</code></pre><h3 id="redis的基本命令之FLUSHALL"><a href="#redis的基本命令之FLUSHALL" class="headerlink" title="redis的基本命令之FLUSHALL"></a>redis的基本命令之FLUSHALL</h3><pre><code>清空所有数据库。
+127.0.0.1:6379&gt; FLUSHALL
+OK
+</code></pre><h3 id="redis的基本命令之FLUSHDB"><a href="#redis的基本命令之FLUSHDB" class="headerlink" title="redis的基本命令之FLUSHDB"></a>redis的基本命令之FLUSHDB</h3><pre><code>清空当前数据库。
+127.0.0.1:6379&gt; FLUSHDB
+OK
+</code></pre><h2 id="Redis数据类型之字符串"><a href="#Redis数据类型之字符串" class="headerlink" title="Redis数据类型之字符串"></a>Redis数据类型之字符串</h2><pre><code>存放的字符串为二进制是安全的。字符串长度支持到512M。
+</code></pre><h3 id="自增INCR-INCRBY"><a href="#自增INCR-INCRBY" class="headerlink" title="自增INCR/INCRBY"></a>自增INCR/INCRBY</h3><pre><code>递增数字INCR key
+当存储的字符串是整数时，redis提供了一个实用的命令INCR，其作用是让当前键值递增，并返回递增后的值。
+127.0.0.1:6379&gt; keys *
+1) &quot;test1&quot;
+2) &quot;test&quot;
+127.0.0.1:6379&gt; get test
+&quot;123&quot;
+127.0.0.1:6379&gt; get test1
+&quot;abc&quot;
+127.0.0.1:6379&gt; get test2
+(nil)
+127.0.0.1:6379&gt; incr num
+(integer) 1
+127.0.0.1:6379&gt; keys *
+1) &quot;num&quot;
+2) &quot;test1&quot;
+3) &quot;test&quot;
+127.0.0.1:6379&gt; incr num
+(integer) 2
+127.0.0.1:6379&gt; incr num
+(integer) 3
+127.0.0.1:6379&gt;
+从上面例子可以看出，如果num不存在，则自动会创建，如果存在自动+1。
+指定增长系数
+语法：INCRBY key increment
+127.0.0.1:6379&gt; incr num
+(integer) 2
+127.0.0.1:6379&gt; incr num
+(integer) 3
+127.0.0.1:6379&gt; incrby num 2
+(integer) 5
+127.0.0.1:6379&gt; incrby num 2
+(integer) 7
+127.0.0.1:6379&gt; incrby num 2
+(integer) 9
+127.0.0.1:6379&gt; incr num
+(integer) 10
+127.0.0.1:6379&gt;
+</code></pre><h3 id="自减DECR-DECRBY"><a href="#自减DECR-DECRBY" class="headerlink" title="自减DECR/DECRBY"></a>自减DECR/DECRBY</h3><pre><code>减少指定的整数
+DECR key
+DECRBY key decrement
+127.0.0.1:6379&gt; incr num
+(integer) 10
+127.0.0.1:6379&gt; decr num
+(integer) 9
+127.0.0.1:6379&gt; decrby num 3
+</code></pre><h3 id="自加浮点INCRBYFLOAT"><a href="#自加浮点INCRBYFLOAT" class="headerlink" title="自加浮点INCRBYFLOAT"></a>自加浮点INCRBYFLOAT</h3><pre><code>整数时，第一次加可以得到正确结果，浮点数后再加浮点就会出现精度问题。
+原来下面的例子2.8.7注意在新版本中已经修正了这个浮点精度问题。3.0.7
+INCRBYFLOAT key decrement
+127.0.0.1:6379&gt;set num
+(integer) 131
+127.0.0.1:6379&gt;incrfloat num 0.7
+“131.7”
+127.0.0.1:6379&gt;incrfloat num 0.7
+“132.3999999999999999”
+</code></pre><h3 id="尾部追加APPEND"><a href="#尾部追加APPEND" class="headerlink" title="尾部追加APPEND"></a>尾部追加APPEND</h3><pre><code>向尾部追加值。如果键不存在则创建该键，其值为写的value，即相当于SET key value。返回值是追加后字符串的总长度。
+语法：APPEND key value
+127.0.0.1:6379&gt; keys *
+1) &quot;num&quot;
+2) &quot;test1&quot;
+3) &quot;test&quot;
+127.0.0.1:6379&gt; get test
+&quot;123&quot;
+127.0.0.1:6379&gt; append test &quot;abc&quot;
+(integer) 6
+127.0.0.1:6379&gt; get test
+&quot;123abc&quot;
+127.0.0.1:6379&gt;
+</code></pre><h3 id="获取字符串长度STRLEN"><a href="#获取字符串长度STRLEN" class="headerlink" title="获取字符串长度STRLEN"></a>获取字符串长度STRLEN</h3><pre><code>字符串长度，返回数据的长度，如果键不存在则返回0。注意，如果键值为空串，返回也是0。
+语法：STRLEN key
+127.0.0.1:6379&gt; get test
+&quot;123abc&quot;
+127.0.0.1:6379&gt; strlen test
+(integer) 6
+127.0.0.1:6379&gt; strlen tnt
+(integer) 0
+127.0.0.1:6379&gt; set tnt &quot;&quot;
+OK
+127.0.0.1:6379&gt; strlen tnt
+(integer) 0
+127.0.0.1:6379&gt; exists tnt
+(integer) 1
+127.0.0.1:6379&gt;
+</code></pre><h3 id="多个MSET-MGET"><a href="#多个MSET-MGET" class="headerlink" title="多个MSET MGET"></a>多个MSET MGET</h3><pre><code>同时设置/获取多个键值
+语法：MSET key value [key value …]
+      MGET key [key …]
+127.0.0.1:6379&gt; flushall
+OK
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt; mset a 1 b 2 c 3
+OK
+127.0.0.1:6379&gt; mget a b c
+1) &quot;1&quot;
+2) &quot;2&quot;
+3) &quot;3&quot;
+127.0.0.1:6379&gt;
+</code></pre><h2 id="Redis生存时间"><a href="#Redis生存时间" class="headerlink" title="Redis生存时间"></a>Redis生存时间</h2><h3 id="Redis之生存时间EXPIRE"><a href="#Redis之生存时间EXPIRE" class="headerlink" title="Redis之生存时间EXPIRE"></a>Redis之生存时间EXPIRE</h3><pre><code>Redis在实际使用过程中更多的用作缓存，然而缓存的数据一般都是需要设置生存时间的，即到期后数据销毁。
+语法：EXPIRE key seconds
+127.0.0.1:6379&gt; flushall
+OK
+127.0.0.1:6379&gt; set bomb tnt
+OK
+127.0.0.1:6379&gt; expire bomb 10
+(integer) 1
+127.0.0.1:6379&gt; ttl bomb
+(integer) 5
+127.0.0.1:6379&gt; ttl bomb
+(integer) 3
+127.0.0.1:6379&gt; ttl bomb
+(integer) 3
+127.0.0.1:6379&gt; ttl bomb
+(integer) 2
+127.0.0.1:6379&gt; ttl bomb
+(integer) 1
+127.0.0.1:6379&gt; ttl bomb
+(integer) -2
+127.0.0.1:6379&gt; ttl bomb
+(integer) -2
+127.0.0.1:6379&gt;
+TTL查看key的剩余时间，当返回值为-2时，表示键被删除。
+当 key 不存在时，返回 -2 。当 key 存在但没有设置剩余生存时间时，返回 -1 。否则，以毫秒为单位，返回 key 的剩余生存时间。
+注意：在 Redis 2.8 以前，当 key 不存在，或者 key 没有设置剩余生存时间时，命令都返回 -1 。
+</code></pre><h3 id="清除生存时间PERSIST"><a href="#清除生存时间PERSIST" class="headerlink" title="清除生存时间PERSIST"></a>清除生存时间PERSIST</h3><pre><code>语法：PERSIST key
+127.0.0.1:6379&gt; set bomb tnt
+OK
+127.0.0.1:6379&gt; expire bomb 60
+(integer) 1
+127.0.0.1:6379&gt; ttl bomb
+(integer) 49
+127.0.0.1:6379&gt; persist bomb
+(integer) 1
+127.0.0.1:6379&gt; ttl bomb
+(integer) -1
+127.0.0.1:6379&gt;
+设置新的数据时需要重新设置该key的生存时间。重新设置值也会清除生存时间。
+</code></pre><h3 id="设置生存时间单位为毫秒PEXPIRE"><a href="#设置生存时间单位为毫秒PEXPIRE" class="headerlink" title="设置生存时间单位为毫秒PEXPIRE"></a>设置生存时间单位为毫秒PEXPIRE</h3><pre><code>语法：PEXPIRE key milliseconds
+127.0.0.1:6379&gt; set bomb tnt
+OK
+127.0.0.1:6379&gt; pexpire bomb 10000
+(integer) 1
+127.0.0.1:6379&gt; ttl bomb
+(integer) 6
+127.0.0.1:6379&gt; ttl bomb
+(integer) 3
+127.0.0.1:6379&gt; ttl bomb
+(integer) -2
+127.0.0.1:6379&gt;
+设置生存时间为毫秒，可以做到更精确的控制。
+</code></pre><h2 id="Redis高级中的hash结构"><a href="#Redis高级中的hash结构" class="headerlink" title="Redis高级中的hash结构"></a>Redis高级中的hash结构</h2><pre><code>在redis中用的最多的就是hash和string类型。
+</code></pre><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><pre><code>假设有User对象以JSON序列化的形式存储到redis中，User对象有id、username、password、age、name等属性，存储的过程如下：
+保存、更新：
+User对象-&gt;json(string)-&gt;redis
+如果在业务上只是更新age属性，其他的属性并不做更新应该怎么做呢？
+Redis数据类型之散列类型hash
+散列类型存储了字段（field）和字段值的映射，但字段值只能是字符串，不支持其他类型，也就是说，散列类型不能嵌套其他的数据类型。一个散列类型可以包含最多2的32次方-1个字段。
+</code></pre><p><img src="redisml1.png" alt="redisml1"></p>
+<h3 id="HSET和HGET赋值和取值"><a href="#HSET和HGET赋值和取值" class="headerlink" title="HSET和HGET赋值和取值"></a>HSET和HGET赋值和取值</h3><pre><code>HSET key field value
+HGET key field
+HMSET key field value [field value…]
+HMGET key field value [field value…]
+HGETALL key
+
+127.0.0.1:6379&gt; hset user username chenchen
+(integer) 1
+127.0.0.1:6379&gt; hget user username
+&quot;chenchen&quot;
+127.0.0.1:6379&gt; hset user username chen
+(integer) 0
+127.0.0.1:6379&gt; keys user
+1) &quot;user&quot;
+127.0.0.1:6379&gt; hgetall user
+1) &quot;username&quot;
+2) &quot;chen&quot;
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; hset user age 30
+(integer) 1
+127.0.0.1:6379&gt; hgetall user
+1) &quot;username&quot;
+2) &quot;chen&quot;
+3) &quot;age&quot;
+4) &quot;30&quot;
+127.0.0.1:6379&gt;
+HSET命令不区分插入和更新操作，当执行插入操作时HSET命令返回1，当执行更新操作时返回0。
+</code></pre><h3 id="HMSET和HMGET设置和获取对象属性"><a href="#HMSET和HMGET设置和获取对象属性" class="headerlink" title="HMSET和HMGET设置和获取对象属性"></a>HMSET和HMGET设置和获取对象属性</h3><pre><code>127.0.0.1:6379&gt; hmset person username tony age 18
+OK
+127.0.0.1:6379&gt; hmget person age username
+1) &quot;18&quot;
+2) &quot;tony&quot;
+127.0.0.1:6379&gt; hgetall person
+1) &quot;username&quot;
+2) &quot;tony&quot;
+3) &quot;age&quot;
+4) &quot;18&quot;
+127.0.0.1:6379&gt;
+注意：上面HMGET字段顺序可以自行定义
+</code></pre><h3 id="HEXISTS属性是否存在"><a href="#HEXISTS属性是否存在" class="headerlink" title="HEXISTS属性是否存在"></a>HEXISTS属性是否存在</h3><pre><code>127.0.0.1:6379&gt; hexists killer
+(error) ERR wrong number of arguments for &apos;hexists&apos; command
+127.0.0.1:6379&gt; hexists killer a
+(integer) 0
+127.0.0.1:6379&gt; hexists user username
+(integer) 1
+127.0.0.1:6379&gt; hexists person age
+(integer) 1
+127.0.0.1:6379&gt;
+</code></pre><h3 id="HDEL删除对象字段"><a href="#HDEL删除对象字段" class="headerlink" title="HDEL删除对象字段"></a>HDEL删除对象字段</h3><pre><code>127.0.0.1:6379&gt; hdel user age
+(integer) 1
+127.0.0.1:6379&gt; hgetall user
+1) &quot;username&quot;
+2) &quot;chen&quot;
+127.0.0.1:6379&gt; hgetall person
+1) &quot;username&quot;
+2) &quot;tony&quot;
+3) &quot;age&quot;
+4) &quot;18&quot;
+127.0.0.1:6379&gt;
+</code></pre><h3 id="只获取字段名HKEYS或字段值HVALS"><a href="#只获取字段名HKEYS或字段值HVALS" class="headerlink" title="只获取字段名HKEYS或字段值HVALS"></a>只获取字段名HKEYS或字段值HVALS</h3><pre><code>127.0.0.1:6379&gt; hkeys person
+1) &quot;username&quot;
+2) &quot;age&quot;
+127.0.0.1:6379&gt; hvals person
+1) &quot;tony&quot;
+2) &quot;18&quot;
+7.6.7    获取字段数量HLEN
+127.0.0.1:6379&gt; hlen user
+(integer) 1
+127.0.0.1:6379&gt; hlen person
+(integer) 2
+127.0.0.1:6379&gt;
+</code></pre><h3 id="Jredis示例"><a href="#Jredis示例" class="headerlink" title="Jredis示例"></a>Jredis示例</h3><pre><code>package cn.redis;
+
+import java.util.Map;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+public class JedisPoolDemoCMD {
+
+    public static void main(String[] args) {
+        // 构建连接池配置信息
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        // 设置最大连接数
+        jedisPoolConfig.setMaxTotal(50);
+
+        // 构建连接池
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, &quot;127.0.0.1&quot;, 6379);
+
+        // 从连接池中获取连接
+        Jedis jedis = jedisPool.getResource();
+
+        jedis.hset(&quot;USER_1&quot;, &quot;username&quot;, &quot;zhangsan&quot;);
+        jedis.hset(&quot;USER_1&quot;, &quot;password&quot;, &quot;123456&quot;);
+
+        Map&lt;String, String&gt; val = jedis.hgetAll(&quot;USER_1&quot;);
+        for (Map.Entry&lt;String, String&gt; entry : val.entrySet()) {
+            System.out.println(entry.getKey() + &quot;  &quot; + entry.getValue());
+        }
+
+        // 将连接还回到连接池中
+        jedisPool.returnResource(jedis);
+
+        // 释放连接池
+        jedisPool.close();
+
+    }
+
+}
+Redis中测试：
+127.0.0.1:6379&gt; hgetall USER_1
+1) &quot;username&quot;
+2) &quot;zhangsan&quot;
+3) &quot;password&quot;
+4) &quot;123456&quot;
+127.0.0.1:6379&gt; hgetall user_1
+(empty list or set)
+127.0.0.1:6379&gt;
+注意：key值的大小写是区分的。
+</code></pre><h2 id="Redis高级中的list结构"><a href="#Redis高级中的list结构" class="headerlink" title="Redis高级中的list结构"></a>Redis高级中的list结构</h2><pre><code>在redis中用的最多的就是hash和string类型。
+</code></pre><h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><pre><code>Redis的list类型其实就是一个每个子元素都是string类型的双向链表。链表的最大长度是(2的32次方)。我们可以通过push,pop操作从链表的头部或者尾部添加删除元素。这使得list既可以用作栈，也可以用作队列。
+有意思的是list的pop操作还有阻塞版本的，当我们[lr]pop一个list对象时，如果list是空，或者不存在，会立即返回nil。但是阻塞版本的b[lr]pop可以则可以阻塞，当然可以加超时时间，超时后也会返回nil。为什么要阻塞版本的pop呢，主要是为了避免轮询。举个简单的例子如果我们用list来实现一个工作队列。执行任务的thread可以调用阻塞版本的pop去获取任务这样就可以避免轮询去检查是否有任务存在。当任务来时候工作线程可以立即返回，也可以避免轮询带来的延迟。
+</code></pre><h3 id="查看list"><a href="#查看list" class="headerlink" title="查看list"></a>查看list</h3><pre><code>redis 127.0.0.1:6379&gt; lrange mylist3 0 -1
+</code></pre><h3 id="LPUSH"><a href="#LPUSH" class="headerlink" title="LPUSH"></a>LPUSH</h3><pre><code>在key对应list的头部添加字符串元素
+redis 127.0.0.1:6379&gt; lpush mylist &quot;world&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; lpush mylist &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; lrange mylist 0 -1
+1) &quot;hello&quot;
+2) &quot;world&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="RPUSH"><a href="#RPUSH" class="headerlink" title="RPUSH"></a>RPUSH</h3><pre><code>在key对应list的尾部添加字符串元素
+redis 127.0.0.1:6379&gt; rpush mylist2 &quot;hello&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist2 &quot;world&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; lrange mylist2 0 -1
+1) &quot;hello&quot;
+2) &quot;world&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="linsert"><a href="#linsert" class="headerlink" title="linsert"></a>linsert</h3><pre><code>在key对应list的特定位置之前或之后添加字符串元素
+redis 127.0.0.1:6379&gt; rpush mylist3 &quot;hello&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist3 &quot;world&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; linsert mylist3 before &quot;world&quot; &quot;there&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; lrange mylist3 0 -1
+1) &quot;hello&quot;
+2) &quot;there&quot;
+3) &quot;world&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="lset"><a href="#lset" class="headerlink" title="lset"></a>lset</h3><pre><code>设置list中指定下标的元素值
+redis 127.0.0.1:6379&gt; rpush mylist4 &quot;one&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist4 &quot;two&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush mylist4 &quot;three&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; lset mylist4 0 &quot;four&quot;
+OK
+redis 127.0.0.1:6379&gt; lset mylist4 -2 &quot;five&quot;
+OK
+redis 127.0.0.1:6379&gt; lrange mylist4 0 -1
+1) &quot;four&quot;
+2) &quot;five&quot;
+3) &quot;three&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="lrem"><a href="#lrem" class="headerlink" title="lrem"></a>lrem</h3><pre><code>从key对应list中删除count个和value相同的元素，count&gt;0时，按从头到尾的顺序删除
+redis 127.0.0.1:6379&gt; rpush mylist5 &quot;hello&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist5 &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush mylist5 &quot;foo&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; rpush mylist5 &quot;hello&quot;
+(integer) 4
+redis 127.0.0.1:6379&gt; lrem mylist5 2 &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; lrange mylist5 0 -1
+1) &quot;foo&quot;
+2) &quot;hello&quot;
+redis 127.0.0.1:6379&gt;
+count&lt;0时，按从尾到头的顺序删除
+redis 127.0.0.1:6379&gt; rpush mylist6 &quot;hello&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist6 &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush mylist6 &quot;foo&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; rpush mylist6 &quot;hello&quot;
+(integer) 4
+redis 127.0.0.1:6379&gt; lrem mylist6 -2 &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; lrange mylist6 0 -1
+1) &quot;hello&quot;
+2) &quot;foo&quot;
+redis 127.0.0.1:6379&gt;
+count=0时，删除全部
+redis 127.0.0.1:6379&gt; rpush mylist7 &quot;hello&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist7 &quot;hello&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush mylist7 &quot;foo&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; rpush mylist7 &quot;hello&quot;
+(integer) 4
+redis 127.0.0.1:6379&gt; lrem mylist7 0 &quot;hello&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; lrange mylist7 0 -1
+1) &quot;foo&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="ltrim"><a href="#ltrim" class="headerlink" title="ltrim"></a>ltrim</h3><pre><code>保留指定key 的值范围内的数据
+redis 127.0.0.1:6379&gt; rpush mylist8 &quot;one&quot;
+(integer) 1
+redis 127.0.0.1:6379&gt; rpush mylist8 &quot;two&quot;
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush mylist8 &quot;three&quot;
+(integer) 3
+redis 127.0.0.1:6379&gt; rpush mylist8 &quot;four&quot;
+(integer) 4
+redis 127.0.0.1:6379&gt; ltrim mylist8 1 -1
+OK
+redis 127.0.0.1:6379&gt; lrange mylist8 0 -1
+1) &quot;two&quot;
+2) &quot;three&quot;
+3) &quot;four&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="lpop"><a href="#lpop" class="headerlink" title="lpop"></a>lpop</h3><pre><code>从list的头部删除元素，并返回删除元素
+redis 127.0.0.1:6379&gt; lrange mylist 0 -1
+1) &quot;hello&quot;
+2) &quot;world&quot;
+redis 127.0.0.1:6379&gt; lpop mylist
+&quot;hello&quot;
+redis 127.0.0.1:6379&gt; lrange mylist 0 -1
+1) &quot;world&quot;
+redis 127.0.0.1:6379&gt;
+7.7.10    rpop
+从list的尾部删除元素，并返回删除元素：
+redis 127.0.0.1:6379&gt; lrange mylist2 0 -1
+1) &quot;hello&quot;
+2) &quot;world&quot;
+redis 127.0.0.1:6379&gt; rpop mylist2
+&quot;world&quot;
+redis 127.0.0.1:6379&gt; lrange mylist2 0 -1
+1) &quot;hello&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="rpoplpush"><a href="#rpoplpush" class="headerlink" title="　　rpoplpush"></a>　　rpoplpush</h3><pre><code>从第一个list的尾部移除元素并添加到第二个list的头部,最后返回被移除的元素值，整个操作是原子的.如果第一个list是空或者不存在返回nil：
+redis 127.0.0.1:6379&gt; lrange mylist5 0 -1
+1) &quot;three&quot;
+2) &quot;foo&quot;
+3) &quot;hello&quot;
+redis 127.0.0.1:6379&gt; lrange mylist6 0 -1
+1) &quot;hello&quot;
+2) &quot;foo&quot;
+redis 127.0.0.1:6379&gt; rpoplpush mylist5 mylist6
+&quot;hello&quot;
+redis 127.0.0.1:6379&gt; lrange mylist5 0 -1
+1) &quot;three&quot;
+2) &quot;foo&quot;
+redis 127.0.0.1:6379&gt; lrange mylist6 0 -1
+1) &quot;hello&quot;
+2) &quot;hello&quot;
+3) &quot;foo&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="lindex"><a href="#lindex" class="headerlink" title="　　lindex"></a>　　lindex</h3><pre><code>返回名称为key的list中index位置的元素：
+redis 127.0.0.1:6379&gt; lrange mylist5 0 -1
+1) &quot;three&quot;
+2) &quot;foo&quot;
+redis 127.0.0.1:6379&gt; lindex mylist5 0
+&quot;three&quot;
+redis 127.0.0.1:6379&gt; lindex mylist5 1
+&quot;foo&quot;
+redis 127.0.0.1:6379&gt;
+</code></pre><h3 id="llen"><a href="#llen" class="headerlink" title="　　llen"></a>　　llen</h3><pre><code>返回key对应list的长度：
+redis 127.0.0.1:6379&gt; llen mylist5
+(integer) 2
+redis 127.0.0.1:6379&gt;
+</code></pre>
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/05/12/redis分片/" class="pre-post btn btn-default" title='redis分片'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">redis分片</span>
+        </a>
+    
+    
+        <a href="/2017/05/07/redis介绍/" class="next-post btn btn-default" title='redis介绍（介绍，使用）'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">redis介绍（介绍，使用）</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro-shou授权/" style="font-size: 10px;">shiro shou授权</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/正向代理-反向代理-透明代理/" style="font-size: 10px;">正向代理 反向代理  透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>
