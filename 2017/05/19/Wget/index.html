@@ -27,7 +27,7 @@
     <!--Title-->
 
 
-<title>Archives: 2016/3 | Hexo</title>
+<title>Wget命令实现克隆网站镜像 | Hexo</title>
 
 
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -37,6 +37,8 @@
 
     
 
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -122,27 +124,214 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <div id="main">
-  <div id="post-list">
-    <ul class="archives-post-list">
-    	<h1 class="info">2016年 3月</h1>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Wget命令实现克隆网站镜像">
+            
+	            Wget命令实现克隆网站镜像
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/wget" title='wget'>
+                        wget
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
         
-          <li class="post-items" _href="/2016/03/05/maven使用el表达式/">
-            <h3 class="post-item-title">
-            	<a href="/2016/03/05/maven使用el表达式/"> Maven项目使用不了EL表达式 </a>
-            </h3>  
-          </li>
-        
-          <li class="post-items" _href="/2016/03/01/log4j/">
-            <h3 class="post-item-title">
-            	<a href="/2016/03/01/log4j/"> log4j日志存储到本地 </a>
-            </h3>  
-          </li>
-        
-    </ul>
-  </div>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/05/19</span>
+        </span>
+    
 </div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>334</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <hr>
+<p>我们会有这种需求，看到有个网站很多文章内容不错，想把它们全部保存下来在手机上或电脑上有空看，但是不想联网看，或者我们想在公司内网搭个网站，和这个网站内容一模一样，方便公司人员阅读，这时候我们如何做这个网站的镜像呢？</p>
+<p>网上当然有很多工具能用，但很多都是收费的，我们考虑一个免费小巧的工具来实现我们的要求，那就是Linux上一个有名的工具wget。</p>
+<hr>
+<h2 id="一、用WGET做网站镜像"><a href="#一、用WGET做网站镜像" class="headerlink" title="一、用WGET做网站镜像"></a>一、用WGET做网站镜像</h2><pre><code>这个工具有windows版本，网上搜一下wget for windows，找到合适地址下载。
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+因为我是64位系统，所以下载了上面标红的地址
+
+下载下来后，为了能在命令行中方便使用，我把它放到了C:WindowsSystem32目录下（如果你会设置环境变量可以设置上，你也可以用cd命令切换到wget所在目录操作）。
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+把wget.exe放到C:WindowsSystem32以方便命令行使用
+
+我们WIN+R，输入cmd进入到命令行界面
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+输入wget -h看下帮助信息
+
+wget的命令行参数太多了，我们只考虑做网站镜像的有用参数。
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+标红的即为做镜像的参数
+
+我们来看一个学习编程的网站w3school
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+假如我们想做这个网站的镜像怎么办呢？
+
+直接用wget -m http://www.w3school.com.cn/
+
+这种是最简单暴力的用法，但是如果网站引用了外部的链接，这个下载下来的东西太多了，而且有些asp后缀的页面，我们如果想在本地用浏览器打开看没法直接打开，而且有时候我们可能只想下载某个网站目录下的文件，不想下载太多。
+
+我们需要限制下。
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+我们用-np参数来限制只拉取当前目录不拉取父目录的网址数据
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+我们用-k参数链接指向本地，便于浏览
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+我们用-p参数让图片等信息需要来展示在HTML上的我们全下载
+
+
+假如我们只想下载w3school上的JS教程，我们用如下命令即可：
+
+wget -m -k -np -p http://www.w3school.com.cn/js/index.asp
+
+但是这个命令还是缺少一些东西，比如后缀有ASP，其它的还有断点续传，文件后缀，模拟浏览器，https下是否检查证书等。
+
+我们最后总结下最合适的镜像网站语法，假如想对网站http://www.XXXX.com做镜像，而且做出来的镜像方便本地浏览器直接打开查看，用如下命令：
+
+wget -c -m -k -np -p -E -U Mozilla --no-check-certificate http://www.XXXX.com
+</code></pre><h2 id="二、WGET做镜像演示"><a href="#二、WGET做镜像演示" class="headerlink" title="二、WGET做镜像演示"></a>二、WGET做镜像演示</h2><pre><code>我们先实际操作一下，我们下载下JS的教程.。
+
+wget -c -m -k -np -p -E -U Mozilla --no-check-certificate http://www.w3school.com.cn/js/index.asp
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+下载中……
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+下载完成
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+镜像放在单独的目录，以网址命名
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+网站目录结构
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+我们用浏览器直接双击打开上面标红的index.asp.html，如下图：
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+如何克隆一个网站全站或部分内容(做网站镜像)
+
+我们在左侧标红区域点击，跳转到的页面还是本地
+
+测试看来，我们成功的镜像了JS教程的页面，而且页面显示完好。
+
+总结：最终用到的命令如下：
+
+wget -c -m -k -np -p -E -U Mozilla --no-check-certificate 欲镜像的网址
+
+你也可以用一些CHM制作软件把镜像完的本地HTML制成CHM格式的教程发布出去。
+
+如果你想进行限速，间隔下载等特殊需求可以网上查找下wget的命令帮助进行解决，这个比较简单，就不一一介绍了。
+</code></pre>
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2017/05/12/redis分片/" class="next-post btn btn-default" title='redis分片'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">redis分片</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
 
 
 
