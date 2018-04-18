@@ -1,0 +1,677 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>redis哨兵 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="redis哨兵">
+            
+	            redis哨兵
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/redis哨兵  redis高可用" title='redis哨兵  redis高可用'>
+                        redis哨兵  redis高可用
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/06/01</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>320</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="哨兵sentinel"><a href="#哨兵sentinel" class="headerlink" title="哨兵sentinel"></a>哨兵sentinel</h2><pre><code>Redis Sentinel是一个分布式系统，你可以在一个架构中运行多个 Sentinel 进程（progress），这些进程使用流言协议（gossip protocols)来接收关于主服务器是否下线的信息，并使用投票协议（agreement protocols）来决定是否执行自动故障迁移，以及选择哪个从服务器作为新的主服务器。
+Sentinel系统用于管理多个Redis服务器（instance），该系统执行以下三个任务：
+    监控（Monitoring）： Sentinel 会不断地检查你的主服务器和从服务器是否运作正常。
+    提醒（Notification）：当被监控的某个 Redis 服务器出现问题时，Sentinel 可以通过 API 向管理员或者其他应用程序发送通知。
+    自动故障迁移（Automatic failover）：当一个主服务器不能正常工作时， Sentinel 会开始一次自动故障迁移操作，它会将失效主服务器的其中一个从服务器升级为新的主服务器，并让失效主服务器的其他从服务器改为复制新的主服务器；当客户端试图连接失效的主服务器时，集群也会向客户端返回新主服务器的地址，使得集群可以使用新主服务器代替失效服务器。
+</code></pre><h2 id="哨兵的工作原理"><a href="#哨兵的工作原理" class="headerlink" title="哨兵的工作原理"></a>哨兵的工作原理</h2><pre><code>sentinel以每10秒一次的频率向master发送info命令，通过info的回复来分析master信息，master的回复主要包含了两部分信息，一部分是master自身的信息，一部分是master所有的slave（从）的信息，所以sentinel可以自动发现master的从服务。sentinel从master获取到的master自身信息以及master所有的从信息，将会更新到sentinel的sentinelState中及masters（sentinelRedisInstance结构）中的slaves字典中。
+</code></pre><p><img src="redisb1.png" alt="redisb1"></p>
+<h2 id="哨兵sentinel-实现高可用"><a href="#哨兵sentinel-实现高可用" class="headerlink" title="哨兵sentinel-实现高可用"></a>哨兵sentinel-实现高可用</h2><pre><code>哨兵sentinel类似zookeeper。它含有监控，监控个节点的活跃状态。
+</code></pre><p><img src="redisb2.png" alt="redisb2">     </p>
+<pre><code>上面配置了3个节点，但如果主宕机，整个缓存系统就瘫痪，如何实现主宕机，自动从多个从中选举出一个节点当主呢？redis在3.0版本之后提供了哨兵sentinel。通过哨兵实现高可用。
+但一个哨兵也可能宕机，一次启动两个哨兵，自身也实现高可用。
+cp sentinel.conf sentinel2.conf            #复制哨兵
+26379为26380                                #修改端口
+sentinel monitor mymaster192.168.163.20 63791        #设置访问名称
+                                            x#最后的数值为选举时过票数量（坑）
+redis-sentinel sentinel.conf                #启动哨兵
+redis-sentinel sentinel2.conf                #启动哨兵2，形成哨兵的高可用
+</code></pre><p><img src="redisb3.png" alt="redisb3">     </p>
+<pre><code>ps –ef|grep redis        #查看进程
+6010  5709  0 00:38 pts/2    00:00:13 redis-server 127.0.0.1:6379
+6012  5710  0 00:38 pts/2    00:00:13 redis-server 127.0.0.1:6380
+6014  5721  0 00:38 pts/3    00:00:13 redis-server 127.0.0.1:6381
+6018  5927  1 00:39 pts/6    00:00:21 redis-server *:26379 [sentinel]      
+6047  6037  1 00:41 pts/7    00:00:19 redis-server *:26380 [sentinel]       
+6241  2512  0 01:10 pts/1    00:00:00 grep redis
+测试
+kill 6010        #可以看到slave的两个节点开始报链接拒绝错误，不一会哨兵将6380切换为主
+info            #在6380上info命令，可以看到其role:master
+kill 6018        #删除一个哨兵，在6380上set数据，6381自动同步
+</code></pre><h2 id="sentinel的坑"><a href="#sentinel的坑" class="headerlink" title="sentinel的坑"></a>sentinel的坑</h2><h3 id="开放端口或者关闭防火墙"><a href="#开放端口或者关闭防火墙" class="headerlink" title="开放端口或者关闭防火墙"></a>开放端口或者关闭防火墙</h3><pre><code>6379,6380,6381
+26379,26380
+service iptables stop
+</code></pre><h3 id="protected-mode"><a href="#protected-mode" class="headerlink" title="protected-mode"></a>protected-mode</h3><pre><code>默认情况下，Redis node和sentinel的protected-mode都是yes，在搭建集群时，若想从远程连接redis集群，需要将redis node和sentinel的protected-mode修改为no，若只修改redis node，从远程连接sentinel后，依然是无法正常使用的，且sentinel的配置文件中没有protected-mode配置项，需要手工添加。
+</code></pre><h3 id="访问拒绝"><a href="#访问拒绝" class="headerlink" title="访问拒绝"></a>访问拒绝</h3><pre><code>sentinel.conf默认配置
+sentinel monitor mymaster 127.0.0.1 6380 1
+当redis和sentinel在一台服务器上时，必须指定实际的IP地址
+sentinel monitor mymaster 192.168.163.200 6380 1
+</code></pre><h3 id="选举数"><a href="#选举数" class="headerlink" title="选举数"></a>选举数</h3><pre><code>sentinel.conf中96行左右的位置
+sentinel monitor mymaster 127.0.0.1 6379 2
+最后的2代表选举的个数，这个值非常关键。其中的2表示只有在两个sential进程发现master不可用时才执行failover故障转移。例如：即使一个master宕机，如果投票个数未超过1个，redis不会触发failover，不会触发选举，而是一直等待master恢复，当master恢复，一切又工作正常。只有当投票数大于等于1时，才认为master才会触发选举，自动从众多的slave中选择一个节点升级为master，其他自动从节点自动连接次节点。同时会自动修改sentinel.conf文件
+sentinel monitor mymaster 192.168.163.20 6380 1
+默认30秒进行切换
+</code></pre><h2 id="修改从节点的选举优先级"><a href="#修改从节点的选举优先级" class="headerlink" title="修改从节点的选举优先级"></a>修改从节点的选举优先级</h2><pre><code>redis.conf
+slave-priority 100    
+这样当Master挂掉的时候Sentinel会优先选择slave-priority值较小的作为新的Master。
+</code></pre><h2 id="sentinel-conf配置详解"><a href="#sentinel-conf配置详解" class="headerlink" title="sentinel.conf配置详解"></a>sentinel.conf配置详解</h2><pre><code>配置语句    说明
+daemonize yes    以后台进程模式运行
+port 26379    哨兵的端口号，该端口号默认为26379，不得与任何redis node的端口号重复
+logfile “/var/log/redis/sentinel.log    log文件所在地
+sentinel monitor master1 192.168.56.101 7001 1    （第一次配置时）哨兵对哪个master进行监测，此处的master1为一“别名”可以任意，将来程序访问时使用，如sentinel-26379。然后哨兵会通过这个别名后的IP知道整个该master内的slave关系。因此你不用在此配置slave是什么而由哨兵自己去维护这个“链表”。
+sentinel monitor master1 192.168.56.101 7001 1    最后一个1代表当节点宕机时的触发选举的判断条件，1就代表sentinel认定宕机的个数，必须大于这个个数，选举才开始发生，默认值为2，很坑。
+sentinel down-after-milliseconds master1 1000    如果master在多少秒内无反应哨兵会开始进行master-slave间的切换，使用“选举”机制
+sentinel failover-timeout master1 5000    如果在多少秒内没有把宕掉的那台master恢复，那哨兵认为这是一次真正的宕机，而排除该宕掉的master作为节点选取时可用的node然后等待一定的设定值的毫秒数后再来探测该节点是否恢复，如果恢复就把它作为一台slave加入哨兵监测节点群并在下一次切换时为他分配一个“选取号”。
+</code></pre><h2 id="安全访问"><a href="#安全访问" class="headerlink" title="安全访问"></a>安全访问</h2><pre><code>redis.conf
+masterauth &quot;123456&quot;
+requirepass &quot;123456&quot;
+
+sentinel.conf
+sentinel auth-pass mymaster 123456
+
+否则在每个的redis-cli中执行语句：
+CONFIGSET protected-mode no
+
+jedis访问时
+jedis.auth(&quot;123456&quot;);
+</code></pre><h2 id="jedis访问sentinel"><a href="#jedis访问sentinel" class="headerlink" title="jedis访问sentinel"></a>jedis访问sentinel</h2><pre><code>@Test
+public void sentinel(){
+Set&lt;String&gt; sentinels = new HashSet&lt;String&gt;();
+sentinels.add(new HostAndPort(&quot;192.168.163.200&quot;,26379).toString());
+//sentinels.add(new HostAndPort(&quot;192.168.163.20&quot;,26380).toString());
+
+//mymaster是在sentinel.conf中配置的名称
+//sentinel monitor mymaster 192.168.163.200 6380 1
+JedisSentinelPool pool = new JedisSentinelPool(&quot;mymaster&quot;, sentinels);
+System.out.println(&quot;当前master：&quot; + pool.getCurrentHostMaster());
+
+Jedis jedis = pool.getResource();
+    //jedis.auth(&quot;123456&quot;);
+
+System.out.println(jedis.get(&quot;num&quot;));
+pool.returnResource(jedis);   
+
+pool.destroy();
+System.out.println(&quot;ok&quot;);
+}
+</code></pre><h2 id="jedis-和Spring整合访问sentinel"><a href="#jedis-和Spring整合访问sentinel" class="headerlink" title="jedis 和Spring整合访问sentinel"></a>jedis 和Spring整合访问sentinel</h2><pre><code>jedis和spring整合访问sentinel需要一个整合包，这个整合包是通过spring-data支持。整合后会创建RedisTemplate对象，在伪service中就可以调用。
+</code></pre><h3 id="SpringData"><a href="#SpringData" class="headerlink" title="SpringData"></a>SpringData</h3><pre><code>Spring Data 作为SpringSource的其中一个父项目，旨在统一和简化对各类型持久化存储，而不拘泥于是关系型数据库还是NoSQL 数据存储。
+</code></pre><p><img src="redisb4.png" alt="redisb4">     </p>
+<pre><code>Spring Data 项目旨在为大家提供一种通用的编码模式。
+</code></pre><p><img src="redisb5.png" alt="redisb5">     </p>
+<pre><code>数据访问对象实现了对物理数据层的抽象，为编写查询方法提供了方便。通过对象映射，实现域对象和持续化存储之间的转换，而模板提供的是对底层存储实体的访问实现。
+</code></pre><h3 id="引入依赖包"><a href="#引入依赖包" class="headerlink" title="引入依赖包"></a>引入依赖包</h3><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt;
+    &lt;version&gt;1.4.1.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;redis.clients&lt;/groupId&gt;
+    &lt;artifactId&gt;jedis&lt;/artifactId&gt;
+    &lt;version&gt;2.6.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h3 id="整合配置文件applicationContext-sentinel-xml"><a href="#整合配置文件applicationContext-sentinel-xml" class="headerlink" title="整合配置文件applicationContext-sentinel.xml"></a>整合配置文件applicationContext-sentinel.xml</h3><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;  
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;  
+xmlns:context=&quot;http://www.springframework.org/schema/context&quot;  
+xmlns:jee=&quot;http://www.springframework.org/schema/jee&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;  
+xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;  
+xsi:schemaLocation=&quot;  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+&lt;bean id=&quot;poolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;
+&lt;property name=&quot;maxTotal&quot; value=&quot;${redis.maxTotal}&quot; /&gt;
+&lt;property name=&quot;minIdle&quot; value=&quot;${redis.minIdle}&quot; /&gt;
+&lt;property name=&quot;maxIdle&quot; value=&quot;${redis.maxIdle}&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;sentinelConfiguration&quot;
+    class=&quot;org.springframework.data.redis.connection.RedisSentinelConfiguration&quot;&gt;
+&lt;property name=&quot;master&quot;&gt;
+&lt;bean class=&quot;org.springframework.data.redis.connection.RedisNode&quot;&gt;
+&lt;property name=&quot;name&quot; value=&quot;${redis.sentinel.masterName}&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;/property&gt;
+&lt;property name=&quot;sentinels&quot;&gt;
+&lt;set&gt;
+&lt;bean class=&quot;org.springframework.data.redis.connection.RedisNode&quot;&gt;
+&lt;constructor-arg name=&quot;host&quot;
+                        value=&quot;${redis.sentinel1.host}&quot;&gt;&lt;/constructor-arg&gt;
+&lt;constructor-arg name=&quot;port&quot;
+                        value=&quot;${redis.sentinel1.port}&quot; type=&quot;int&quot;&gt;&lt;/constructor-arg&gt;
+&lt;/bean&gt;
+&lt;bean class=&quot;org.springframework.data.redis.connection.RedisNode&quot;&gt;
+&lt;constructor-arg name=&quot;host&quot;
+                        value=&quot;${redis.sentinel2.host}&quot;&gt;&lt;/constructor-arg&gt;
+&lt;constructor-arg name=&quot;port&quot;
+                        value=&quot;${redis.sentinel2.port}&quot; type=&quot;int&quot;&gt;&lt;/constructor-arg&gt;
+&lt;/bean&gt;
+&lt;/set&gt;
+&lt;/property&gt;
+&lt;/bean&gt;
+
+    &lt;!-- p:password=&quot;${redis.sentinel.password}&quot; --&gt;
+&lt;bean id=&quot;connectionFactory&quot;
+        class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;&gt;
+&lt;constructor-arg name=&quot;sentinelConfig&quot; ref=&quot;sentinelConfiguration&quot;&gt;&lt;/constructor-arg&gt;
+&lt;constructor-arg name=&quot;poolConfig&quot; ref=&quot;poolConfig&quot;&gt;&lt;/constructor-arg&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.StringRedisTemplate&quot;&gt;
+&lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;
+&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><h3 id="属性配置文件redis-sentinel-properties"><a href="#属性配置文件redis-sentinel-properties" class="headerlink" title="属性配置文件redis-sentinel.properties"></a>属性配置文件redis-sentinel.properties</h3><pre><code>注意一个坑，属性文件中不能有空格，redis源码中不会去过滤空格，导致如果有空格就无法连接错误Can connect to sentinel, but mymaster seems to be not monitored。
+redis.minIdle=300
+redis.maxIdle=500
+redis.maxTotal=5000
+
+redis.sentinel1.host=192.168.163.200
+redis.sentinel1.port=26379
+
+redis.sentinel2.host=192.168.163.200
+redis.sentinel2.port=26380
+
+redis.sentinel.masterName=mymaster
+redis.sentinel.password=123456
+</code></pre><h3 id="伪service类"><a href="#伪service类" class="headerlink" title="伪service类"></a>伪service类</h3><pre><code>package com.jt.common.service;
+
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+@Service
+public class RedisSentinelService {
+    private Logger logger = LoggerFactory.getLogger(&quot;RedisSentinelService&quot;); 
+
+    //有的工程需要，有的工程不需要。设置required=false，有就注入，没有就不注入。
+@Autowired(required = false)
+    RedisTemplate&lt;?, ?&gt; redisTemplate;
+
+    // 线程池
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(  
+            256, 256, 30L, TimeUnit.SECONDS,  
+            new LinkedBlockingQueue&lt;Runnable&gt;(),  
+            new BasicThreadFactory.Builder().daemon(true)  
+                    .namingPattern(&quot;redis-oper-%d&quot;).build(),  
+            new ThreadPoolExecutor.CallerRunsPolicy());  
+
+    public void set(final String key, final String value) {  
+        redisTemplate.execute(new RedisCallback&lt;Object&gt;() {  
+            @Override  
+            public Object doInRedis(RedisConnection connection)  
+                    throws DataAccessException {  
+                connection.set(  
+                        redisTemplate.getStringSerializer().serialize(key),  
+                        redisTemplate.getStringSerializer().serialize(value));  
+                return null;  
+            }  
+        });  
+    }  
+
+    //设置值后并设置过期时间
+    public void set(final String key, final String value, final long seconds) {  
+    redisTemplate.execute(new RedisCallback&lt;Object&gt;() {  
+        @Override  
+        public Object doInRedis(RedisConnection connection)  
+                throws DataAccessException {  
+            connection.set(  
+                    redisTemplate.getStringSerializer().serialize(key),  
+                    redisTemplate.getStringSerializer().serialize(value));  
+            connection.expire(redisTemplate.getStringSerializer().serialize(key), seconds);
+            return null;  
+        }  
+    });  
+    }  
+
+    public String get(final String key) {  
+        return redisTemplate.execute(new RedisCallback&lt;String&gt;() {  
+            @Override  
+            public String doInRedis(RedisConnection connection)  
+                    throws DataAccessException {  
+                byte[] byteKye = redisTemplate.getStringSerializer().serialize(  
+                        key);  
+                if (connection.exists(byteKye)) {  
+                    byte[] byteValue = connection.get(byteKye);  
+                    String value = redisTemplate.getStringSerializer()  
+                            .deserialize(byteValue);  
+                    logger.debug(&quot;get key:&quot; + key + &quot;,value:&quot; + value);  
+                    return value;  
+                }  
+                logger.error(&quot;valus does not exist!,key:&quot;+key);  
+                return null;  
+            }  
+        });  
+    }  
+
+    public void delete(final String key) {  
+        redisTemplate.execute(new RedisCallback&lt;Object&gt;() {  
+            public Object doInRedis(RedisConnection connection) {  
+                connection.del(redisTemplate.getStringSerializer().serialize(  
+                        key));  
+                return null;  
+            }  
+        });  
+    }  
+
+    /** 
+     * 线程池并发操作redis 
+     *  
+     * @param keyvalue 
+     */  
+    public void mulitThreadSaveAndFind(final String keyvalue) {  
+        executor.execute(new Runnable() {  
+            @Override  
+            public void run() {  
+                try {  
+                    set(keyvalue, keyvalue);  
+                    get(keyvalue);  
+                } catch (Throwable th) {  
+                    // 防御性容错，避免高并发下的一些问题
+                    logger.error(&quot;&quot;, th);  
+                }  
+            }  
+        });  
+    } 
+}
+</code></pre><h3 id="调用代码"><a href="#调用代码" class="headerlink" title="调用代码"></a>调用代码</h3><pre><code>就把实现类换下即可，其它调用不变。
+@Autowired
+private RedisSentinelService redisService;
+</code></pre>
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/06/08/redis集群/" class="pre-post btn btn-default" title='redis集群'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">redis集群</span>
+        </a>
+    
+    
+        <a href="/2017/05/19/Wget/" class="next-post btn btn-default" title='Wget命令实现克隆网站镜像'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">Wget命令实现克隆网站镜像</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/"><i class="fa" aria-hidden="true">July 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/"><i class="fa" aria-hidden="true">June 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/maven生命周期/" style="font-size: 10px;">maven生命周期</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/redis哨兵-redis高可用/" style="font-size: 10px;">redis哨兵  redis高可用</a> <a href="/tags/redis集群/" style="font-size: 10px;">redis集群</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro/" style="font-size: 10px;">shiro</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/shou授权/" style="font-size: 10px;">shou授权</a> <a href="/tags/springMvc整合fastjson/" style="font-size: 10px;">springMvc整合fastjson</a> <a href="/tags/wget/" style="font-size: 10px;">wget</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/正向代理/" style="font-size: 10px;">正向代理</a> <a href="/tags/透明代理/" style="font-size: 10px;">透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

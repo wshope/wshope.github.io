@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Maven的三大生命周期 | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Maven的三大生命周期">
+            
+	            Maven的三大生命周期
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/maven生命周期" title='maven生命周期'>
+                        maven生命周期
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/05/08</span>
+        </span>
+    
+</div>
+
+            
+            
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>344</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="三类生命周期简介："><a href="#三类生命周期简介：" class="headerlink" title="三类生命周期简介："></a>三类生命周期简介：</h2><p>maven从项目的三个不同的角度，定义了三大生命周期，三大生命周期是相互独立的，它们之间不会相互影响。</p>
+<h3 id="1）默认构建生命周期（Default-Lifeclyle）"><a href="#1）默认构建生命周期（Default-Lifeclyle）" class="headerlink" title="1）默认构建生命周期（Default Lifeclyle）:"></a>1）默认构建生命周期（Default Lifeclyle）:</h3><p>该生命周期表示这项目的构建过程，定义了一个项目的构建要经过的不同的阶段。</p>
+<h3 id="2）清理生命周期-Clean-Lifecycle"><a href="#2）清理生命周期-Clean-Lifecycle" class="headerlink" title="2）清理生命周期(Clean Lifecycle):"></a>2）清理生命周期(Clean Lifecycle):</h3><p>该生命周期负责清理项目中的多余信息，保持项目资源和代码的整洁性。一般拿来清空directory(即一般的target)目录下的文件。</p>
+<h3 id="3）站点管理生命周期-Site-Lifecycle"><a href="#3）站点管理生命周期-Site-Lifecycle" class="headerlink" title="3）站点管理生命周期(Site Lifecycle) :"></a>3）站点管理生命周期(Site Lifecycle) :</h3><p>站点周期：用来介绍项目的信息，如项目介绍，项目进度状态、项目组成成员，版本控制信息，项目javadoc索引信息等等。站点管理生命周期定义了站点管理过程的各个阶段。</p>
+<h3 id="三大生命周期图形表示："><a href="#三大生命周期图形表示：" class="headerlink" title="三大生命周期图形表示："></a>三大生命周期图形表示：</h3><p><img src="mavensm1.png" alt="mavensm1"></p>
+<p>项目中应用Maven必懂的过程：23个过程、8个项目实战阶段详解</p>
+<h2 id="默认构建生命周期（Default-Lifeclyle）"><a href="#默认构建生命周期（Default-Lifeclyle）" class="headerlink" title="默认构建生命周期（Default Lifeclyle）"></a>默认构建生命周期（Default Lifeclyle）</h2><h3 id="1）该周期把将一个项目抽象成了23个阶段。"><a href="#1）该周期把将一个项目抽象成了23个阶段。" class="headerlink" title="1）该周期把将一个项目抽象成了23个阶段。"></a>1）该周期把将一个项目抽象成了23个阶段。</h3><p>它的每一个阶段应该干什么事情由用户决定。即：maven为每一个阶段设计了接口，你可以为每一阶段自己定义一个接口，进而实现对应阶段应该有的行为。23个阶段简介如下图：<br><img src="mavensm2.png" alt="mavensm2"></p>
+<p>项目中应用Maven必懂的过程：23个过程、8个项目实战阶段详解</p>
+<h3 id="2）默认生命周期最常用的8个过程阶段："><a href="#2）默认生命周期最常用的8个过程阶段：" class="headerlink" title="2）默认生命周期最常用的8个过程阶段："></a>2）默认生命周期最常用的8个过程阶段：</h3><p>在实际的项目开发过程中， 并不是所有的生命周期阶段都是必须的，大家关心的项目生命周期阶段仅仅是以下8个常用的而已。<br><img src="mavensm3.png" alt="mavensm3"></p>
+<p>项目中应用Maven必懂的过程：23个过程、8个项目实战阶段详解</p>
+<p>具体介绍如下：</p>
+<ol>
+<li><p>应该将resource资源文件准备好，放到指定的target目录下—-process-resources 阶段</p>
+</li>
+<li><p>将java源文件编译成.class文件，然后将class 文件放置到对应的target目录下—-compile阶段；</p>
+</li>
+<li><p>将test类型的resource移动到指定的 target目录下——process-test-resource阶段；</p>
+</li>
+<li><p>将test类型的java 源文件编译成class文件，然后放置到指定的target目录下——test-compile阶段；</p>
+</li>
+<li><p>运行test测试用例——-test阶段；</p>
+</li>
+<li><p>将compile阶段编译的class文件和resource资源打包成jar包或war包——–package阶段；</p>
+</li>
+<li><p>将生成的包安装到本地仓库中——install阶段</p>
+</li>
+<li><p>将生成的包部署到远程仓库中—–deploy阶段</p>
+</li>
+</ol>
+<h2 id="清理生命周期-Clean-Lifecycle"><a href="#清理生命周期-Clean-Lifecycle" class="headerlink" title="清理生命周期(Clean Lifecycle):"></a>清理生命周期(Clean Lifecycle):</h2><p>该生命周期负责清理项目中的多余信息，保持项目资源和代码的整洁性。一般拿来清空directory<br>(即一般的target)目录下的文件。</p>
+<p>当我们执行命令 mvn clean 命令后，Maven 调用清洁的生命周期由以下几个阶段组成：</p>
+<ol>
+<li><p>pre-clean</p>
+</li>
+<li><p>clean</p>
+</li>
+<li><p>post-clean</p>
+</li>
+</ol>
+<h2 id="站点管理生命周期-Site-Lifecycle"><a href="#站点管理生命周期-Site-Lifecycle" class="headerlink" title="站点管理生命周期(Site Lifecycle) :"></a>站点管理生命周期(Site Lifecycle) :</h2><p>Maven的网站插件通常用于创建新的文档，创建报告，部署网站等。</p>
+<p>阶段</p>
+<ol>
+<li><p>pre-site</p>
+</li>
+<li><p>site</p>
+</li>
+<li><p>post-site</p>
+</li>
+<li><p>site-deploy</p>
+</li>
+</ol>
+
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/05/10/redis命令篇/" class="pre-post btn btn-default" title='redis命令篇'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">redis命令篇</span>
+        </a>
+    
+    
+        <a href="/2017/05/07/redis介绍/" class="next-post btn btn-default" title='redis介绍（介绍，使用）'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">redis介绍（介绍，使用）</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/"><i class="fa" aria-hidden="true">July 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/"><i class="fa" aria-hidden="true">June 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/maven生命周期/" style="font-size: 10px;">maven生命周期</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/redis哨兵-redis高可用/" style="font-size: 10px;">redis哨兵  redis高可用</a> <a href="/tags/redis集群/" style="font-size: 10px;">redis集群</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro/" style="font-size: 10px;">shiro</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/shou授权/" style="font-size: 10px;">shou授权</a> <a href="/tags/springMvc整合fastjson/" style="font-size: 10px;">springMvc整合fastjson</a> <a href="/tags/wget/" style="font-size: 10px;">wget</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/正向代理/" style="font-size: 10px;">正向代理</a> <a href="/tags/透明代理/" style="font-size: 10px;">透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>

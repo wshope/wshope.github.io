@@ -1,0 +1,511 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="Hexo">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Mybatis的TypeHandler | Hexo</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+    <link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(http://7xpw2b.com1.z0.glb.clouddn.com/hexo-sinppet/img/banner2.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='John Doe'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 学习java，共同进步 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa "></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa "></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa "></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/资源/"><i class="fa "></i>资源</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Mybatis的TypeHandler">
+            
+	            Mybatis的TypeHandler
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <a href="/categories/ ">
+             
+        </a>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+                
+                    <a href="/tags/mybatis" title='mybatis'>
+                        mybatis
+                    </a>
+                
+            
+        </span>
+    </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2017/07/16</span>
+        </span>
+    
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="TypeHanlder的作用"><a href="#TypeHanlder的作用" class="headerlink" title="TypeHanlder的作用"></a>TypeHanlder的作用</h2><pre><code>比如我有一个Java中的Date数据类型，我想将之存到数据库的时候存成一个1970年至今的毫秒数，怎么实现？再比如我有一个User类，User类中有一个属性叫做interest，这个属性用来描述用户的爱好，它的数据类型是一个List集合，那么我想在把这个List集合存入数据库的时候能够自动的变成{XXX,XXX,XXX}这样一个字符串然后存起来，当我从数据库读取的时候也是读取到这样一个字符串，读取成功之后再自动的将之转为一个List集合，在比如说实体类里面有个map，存数据库的值是json串，取出来直接让他返回成map，这种情况都可以使用TypeHandler去解决
+</code></pre><h2 id="日期的转换"><a href="#日期的转换" class="headerlink" title="日期的转换"></a>日期的转换</h2><p>先来看日期的转换，假设我现在创建一张表，如下：<br><img src="mybatisth1.png" alt="mybatisth1"><br>这里写图片描述<br>这张表中有一个字段叫做regTime，这个字段表示用户的注册时间，它的数据类型为varchar，OK，然后我再在Java中定义一个实体类：</p>
+<pre><code>public class User {
+    private Long id;
+    private String username;
+    private String password;
+    private Date regTime;
+    //省略getter/setter
+}
+</code></pre><p>这个JavaBean中也有一个regTime字段，不同的是这里的数据类型是Date，OK，如果我不做任何特殊处理，直接像初识mybatis(二)向数据库插入数据，也是可以插入成功的，但是插入成功后是这样： </p>
+<p><img src="mybatisth2.png" alt="mybatisth2"></p>
+<p>这里写图片描述<br>这个当然不是我想要的，我希望存到数据库里的是这样的：<br><img src="mybatisth3.png" alt="mybatisth3"> </p>
+<p>这里写图片描述<br>就是我直接向数据库写数据，要写的是一个Date对象，但是写到数据库之后这个Date对象就变成了Date对象所描述的时间到1970年的秒数了，然后当我从数据库读取这个秒数之后，系统又会自动帮我将这个秒数转为Date对象，就是这样两个需求。这个时候，我们要做的事情其实很简单，那就是自定义typeHandler，自定义typeHandler我们有两种方式，一种是实现TypeHandler接口，还有一种简化的写法就是继承自BaseTypeHandler类，我这里先以第二种为例来进行说明。</p>
+<p>自定义typeHandler继承自BaseTypeHandler<br>    @MappedJdbcTypes({JdbcType.VARCHAR})<br>    @MappedTypes({Date.class})<br>    public class MyDateTypeHandler extends BaseTypeHandler<date> {<br>        public void setNonNullParameter(PreparedStatement preparedStatement, int i, Date date, JdbcType jdbcType) throws SQLException {<br>            preparedStatement.setString(i, String.valueOf(date.getTime()));<br>        }</date></p>
+<pre><code>    public Date getNullableResult(ResultSet resultSet, String s) throws SQLException {
+        return new Date(resultSet.getLong(s));
+    }
+
+    public Date getNullableResult(ResultSet resultSet, int i) throws SQLException {
+        return new Date(resultSet.getLong(i));
+    }
+
+    public Date getNullableResult(CallableStatement callableStatement, int i) throws SQLException {
+        return callableStatement.getDate(i);
+    }
+}
+</code></pre><p>关于这个类我说如下几点：</p>
+<ol>
+<li>@MappedJdbcTypes定义的是JdbcType类型，这里的类型不可自己随意定义，必须要是枚举类org.apache.ibatis.type.JdbcType所枚举的数据类型。 </li>
+<li>@MappedTypes定义的是JavaType的数据类型，描述了哪些Java类型可被拦截。 </li>
+<li>在我们启用了我们自定义的这个TypeHandler之后，数据的读写都会被这个类所过滤 </li>
+<li>在setNonNullParameter方法中，我们重新定义要写往数据库的数据。 </li>
+<li>在另外三个方法中我们将从数据库读出的数据类型进行转换。</li>
+</ol>
+<p>在Mapper中进行配置<br>自定义好了typeHandler之后，接下来我们需要在userMapper.xml中进行简单的配置，首先我们可以像上文说的，配置resultMap，如下：</p>
+<pre><code>&lt;resultMap id=&quot;userResultMap&quot; type=&quot;org.sang.bean.User&quot;&gt;
+        &lt;result typeHandler=&quot;org.sang.db.MyDateTypeHandler&quot; column=&quot;regTime&quot; javaType=&quot;java.util.Date&quot;
+                jdbcType=&quot;VARCHAR&quot;
+                property=&quot;regTime&quot;/&gt;
+    &lt;/resultMap&gt;
+</code></pre><p>配置resultMap的时候我们指定了javaType和jdbcType，同时也指定了处理的typeHandler，然后在select中使用这个resultMap：</p>
+<pre><code>&lt;select id=&quot;getUser&quot; resultMap=&quot;userResultMap&quot;&gt;
+        select * from user4
+    &lt;/select&gt;
+</code></pre><p>但是这种方式有一个缺点那就是只适用于查询操作，即在查询的过程中系统会启用我们自定义的typeHandler，会将秒数转为Date对象，但是在插入的时候却不会启用我们自定义的typeHandler，想要在插入的时候启用自定义的typeHandler，需要我们在insert节点中简单配置一下，如下：</p>
+<pre><code>&lt;insert id=&quot;insertUser&quot; parameterType=&quot;org.sang.bean.User&quot;&gt;
+        INSERT INTO user4(username,password,regTime) VALUES (#{username},#{password},#{regTime,javaType=Date,jdbcType=VARCHAR,typeHandler=org.sang.db.MyDateTypeHandler})
+    &lt;/insert&gt;
+</code></pre><p>也可以只配置javaType和jdbcType，如下：</p>
+<pre><code>&lt;insert id=&quot;insertUser2&quot;&gt;
+        INSERT INTO user4(username,password,regTime) VALUES (#{username},#{password},#{regTime,javaType=Date,jdbcType=VARCHAR})
+    &lt;/insert&gt;
+</code></pre><p>或者只配置typeHandler：</p>
+<pre><code>&lt;insert id=&quot;insertUser3&quot;&gt;
+        INSERT INTO user4(username,password,regTime) VALUES (#{username},#{password},#{regTime,typeHandler=org.sang.db.MyDateTypeHandler})
+    &lt;/insert&gt;
+</code></pre><p>这三种效果都是一样的，都是在插入的时候将数据Date对象转为秒数。OK，如此之后，我们就可以实现将Date对象插入数据库之后变秒数以及将数据库中的秒数读取之后自动转为Date对象了。我们来看一个简单的测试：</p>
+<pre><code>@Test
+public void test2() {
+    SqlSession sqlSession = null;
+    try {
+        sqlSession = DBUtils.openSqlSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = new User();
+        user.setPassword(&quot;222222&quot;);
+        user.setUsername(&quot;李四&quot;);
+        Date regTime = new Date();
+        user.setRegTime(regTime);
+        userMapper.insertUser(user);
+        sqlSession.commit();
+    } catch (Exception e) {
+        e.printStackTrace();
+        sqlSession.rollback();
+    } finally {
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+    }
+
+}
+</code></pre><p>插入结果如下： </p>
+<p><img src="mybatisth4.png" alt="mybatisth4"> </p>
+<p>这里写图片描述</p>
+<p>读取代码：</p>
+<pre><code>@Test
+    public void test1() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = DBUtils.openSqlSession();
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            List&lt;User&gt; list = userMapper.getUser();
+            for (User user : list) {
+                System.out.println(user);
+            }
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            sqlSession.rollback();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+
+    }
+</code></pre><p>读取结果如下： </p>
+<p><img src="mybatisth5.png" alt="mybatisth5"> </p>
+<p>这里写图片描述</p>
+<p>OK，结果上面几步配置我们就完美的解决了读写时的数据转换问题了，读取时的数据转换除了我们上面介绍的定义resultMap然后在select节点中引用这种方式之外，也可以使用下面这种方式，注意下面这种方式只能解决读取时的数据转换问题</p>
+<p>在配置文件中注册typeHandler<br>我们需要在我们的mybatis配置文件中注册typeHandler，注册有两种不同的方式，可以像下面这样一个类一个类的注册：</p>
+<pre><code>&lt;typeHandlers&gt;
+        &lt;typeHandler handler=&quot;org.sang.db.MyDateTypeHandler&quot;/&gt;
+    &lt;/typeHandlers&gt;
+</code></pre><p>也可以直接注册一个包中所有的typeHandler，系统在启动时会自动扫描包下的所有文件，如下：</p>
+<pre><code>&lt;typeHandlers&gt;
+        &lt;package name=&quot;org.sang.db&quot;/&gt;
+    &lt;/typeHandlers&gt;
+</code></pre><p>这样配置完成之后，我们的目的就达到了，当我们进行数据库的读取操作的时候，秒数就会自动转为Date对象。</p>
+<p>小结<br>OK，经过上面的介绍，想必小伙伴对typeHandler的使用已经有一定了解了，总结一下就是读取时的配置要和插入时的配置分贝来做，读取时数据转换我们有两种配置方式，分别是resultMap和在mybatis配置文件中配置typeHandlers，插入时的配置就是在insert节点中进行配置。</p>
+<h2 id="List集合的转换"><a href="#List集合的转换" class="headerlink" title="List集合的转换"></a>List集合的转换</h2><p>OK，如果小伙伴们学会了如何把Date转为秒数，那么对于List集合的转换我就不再赘述了，道理都是一样的，大家可以可以直接在文末下载Demo，Demo中有List集合转换的案例。<br>这里给大家看两张效果图吧：<br>List集合存入数据库之后变成这样： </p>
+<p><img src="mybatisth6.png" alt="mybatisth6"> </p>
+<p>这里写图片描述<br>读取出来之后又自动转为List集合了，下图是查询操作，实体类，和查询结果：<br>这里写图片描述<br><img src="mybatisth7.png" alt="mybatisth7"> </p>
+
+    </div>
+    <!--打赏-->
+        <div class="reward">
+       <div class="reward-button">赏 <span class="reward-code">
+        <span class="alipay-code"> <img class="alipay-img wdp-appear" src="http://www.wshope.cn/img/alipay.png"><b>支付宝打赏</b> </span> 
+        <span class="wechat-code"> <img class="wechat-img wdp-appear" src="http://www.wshope.cn/img/weipay.png"><b>微信打赏</b> </span> 
+       </div>
+      <p class="reward-notice">如果文章对你有帮助，欢迎点击上方按钮打赏作者</p>
+      </div>
+      <!--打赏-->
+
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2017/07/02/fastjson/" class="next-post btn btn-default" title='FastJson使用，与springMvc整合'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">FastJson使用，与springMvc整合</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	<script type="text/javascript" src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: decodeURI(window.location.pathname),
+        owner:"wshope",
+        repo:"wshope.github.io",
+        oauth: {
+          client_id:"abf7f95a9eab107bb37f",
+          client_secret:"a6ff5bb94826c9920196b4592925c0a6260d9dd8"
+        },
+        perPage:"10",
+    });
+    gitment.render('comments');
+</script>
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">Search</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>欢迎更新~ <br/>
+
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Social</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/wshope" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+      <h3 class="title">Archives</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/"><i class="fa" aria-hidden="true">July 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/"><i class="fa" aria-hidden="true">June 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/"><i class="fa" aria-hidden="true">May 2017</i></a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/"><i class="fa" aria-hidden="true">April 2017</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/"><i class="fa" aria-hidden="true">March 2017</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/"><i class="fa" aria-hidden="true">April 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/"><i class="fa" aria-hidden="true">March 2016</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/"><i class="fa" aria-hidden="true">February 2016</i></a><span class="archive-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+  <div class="widget">
+    <h3 class="title">Tag Cloud</h3>
+    <div class="content tag-cloud">
+        <a href="/tags/EL表达式/" style="font-size: 10px;">EL表达式</a> <a href="/tags/dos/" style="font-size: 10px;">dos</a> <a href="/tags/fastjson/" style="font-size: 10px;">fastjson</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/maven生命周期/" style="font-size: 10px;">maven生命周期</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/redis使用，介绍/" style="font-size: 10px;">redis使用，介绍</a> <a href="/tags/redis分片/" style="font-size: 10px;">redis分片</a> <a href="/tags/redis命令/" style="font-size: 10px;">redis命令</a> <a href="/tags/redis哨兵-redis高可用/" style="font-size: 10px;">redis哨兵  redis高可用</a> <a href="/tags/redis集群/" style="font-size: 10px;">redis集群</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/shiro/" style="font-size: 10px;">shiro</a> <a href="/tags/shiro实现/" style="font-size: 10px;">shiro实现</a> <a href="/tags/shou授权/" style="font-size: 10px;">shou授权</a> <a href="/tags/springMvc整合fastjson/" style="font-size: 10px;">springMvc整合fastjson</a> <a href="/tags/wget/" style="font-size: 10px;">wget</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/正向代理/" style="font-size: 10px;">正向代理</a> <a href="/tags/透明代理/" style="font-size: 10px;">透明代理</a>
+    </div>
+  </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">Friends</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.wshope.cn" class="fa" target="_blank">个人博客</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>
